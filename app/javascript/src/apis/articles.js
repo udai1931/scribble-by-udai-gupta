@@ -4,9 +4,12 @@ const list = () => axios.get("/articles");
 
 const create = payload => axios.post("/articles", payload);
 
+const show = slug => axios.get(`/articles/${slug}`);
+
 const articlesApi = {
   list,
   create,
+  show,
 };
 
 export default articlesApi;
