@@ -8,6 +8,7 @@ import { initializeLogger } from "common/logger";
 import Navbar from "common/Navbar";
 import Articles from "components/Articles";
 import CreateArticle from "components/CreateArticle";
+import EditArticle from "components/EditArticle";
 import EUI from "components/EUI";
 
 const App = () => {
@@ -34,6 +35,7 @@ const App = () => {
             path="/"
             render={() => <div>Welcome to scribble app</div>}
           />
+          <Route exact path="/articles/edit/:slug" component={EditArticle} />
           <Route exact path="/articles/create" component={CreateArticle} />
           <Route exact path="/articles" component={Articles} />
           <Route exact path="/articles/:slug" component={EUI} />
