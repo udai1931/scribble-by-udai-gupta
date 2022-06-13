@@ -4,6 +4,7 @@ class Article < ApplicationRecord
   enum state: { Draft: "Draft", Published: "Published" }
 
   belongs_to :author_user, foreign_key: :author_user_id, class_name: "User"
+  belongs_to :category
 
   validates :title, presence: true
   validates :description, presence: true
@@ -12,6 +13,8 @@ class Article < ApplicationRecord
 
   before_validation :set_user
   before_create :set_slug
+  after_create :increment_count
+  after_destroy :decrement_count
 
   private
 
@@ -39,5 +42,17 @@ class Article < ApplicationRecord
 
     def set_user
       self.author_user_id = 1
+    end
+
+    def increment_count
+      category = self.category
+      category.count = category.count + 1
+      category.save!
+    end
+
+    def decrement_count
+      category = self.category
+      category.count = category.count - 1
+      category.save!
     end
 end
