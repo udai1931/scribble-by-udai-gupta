@@ -109,6 +109,7 @@ function Articles() {
       <MenubarComponent
         articlesCount={articlesCount}
         categories={categories}
+        setCategories={setCategories}
         selectedTab={selectedTab}
         setSelectedTab={setSelectedTab}
       />

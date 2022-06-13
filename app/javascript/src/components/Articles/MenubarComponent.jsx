@@ -4,16 +4,33 @@ import { Search, Plus } from "neetoicons";
 import { Typography } from "neetoui";
 import { MenuBar } from "neetoui/layouts";
 
+import categoriesApi from "apis/categories";
+import Input from "common/Input.jsx";
+
 import { MENUBAR_ITEMS } from "./constants";
 
 function MenubarComponent({
   articlesCount,
   categories = [],
+  setCategories,
   selectedTab,
   setSelectedTab,
 }) {
   const [isSearchCollapsed, setIsSearchCollapsed] = useState(true);
+  const [isCreateCollapsed, setIsCreateCollapsed] = useState(true);
   const [search, setSearch] = useState("");
+  const [newCategory, setNewCategory] = useState("");
+
+  const addNewCategory = async () => {
+    try {
+      const res = await categoriesApi.create({ name: newCategory });
+      setCategories([...categories, res.data.category]);
+      setNewCategory("");
+      setIsCreateCollapsed(prev => !prev);
+    } catch (err) {
+      logger.error(err);
+    }
+  };
 
   const filteredCategories = categories.filter(category =>
     category.name.toLowerCase().includes(search.toLowerCase())
@@ -43,7 +60,7 @@ function MenubarComponent({
           },
           {
             icon: Plus,
-            onClick: () => setIsSearchCollapsed(prev => !prev),
+            onClick: () => setIsCreateCollapsed(prev => !prev),
           },
         ]}
       >
@@ -66,6 +83,12 @@ function MenubarComponent({
         placeholder="Search Category"
         value={search}
         onChange={e => setSearch(e.target.value)}
+      />
+      <Input
+        collapse={!isCreateCollapsed}
+        value={newCategory}
+        setValue={setNewCategory}
+        handleSubmit={addNewCategory}
       />
 
       <div className="overflow-y-auto">
