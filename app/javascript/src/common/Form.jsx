@@ -11,6 +11,9 @@ function Form({
   desc,
   setTitle,
   setDesc,
+  categories,
+  category,
+  setCategory,
   handleClose,
 }) {
   return (
@@ -30,6 +33,13 @@ function Form({
             size="small"
             label="Category"
             isSearchable
+            defaultValue={category}
+            selected={category}
+            onChange={obj => setCategory(obj)}
+            options={categories?.map(category => ({
+              value: category.id,
+              label: category.name,
+            }))}
           />
         </div>
         <Textarea

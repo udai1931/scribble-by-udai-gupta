@@ -1,19 +1,30 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 
-import { useHistory } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 
 import articlesApi from "apis/articles";
 import categoriesApi from "apis/categories";
 import Form from "common/Form";
 
-function CreateArticle() {
+function EditArticle() {
+  const { slug } = useParams();
   const [loading, setLoading] = useState(false);
   const [title, setTitle] = useState("");
   const [desc, setDesc] = useState("");
   const [category, setCategory] = useState("");
   const [categories, setCategories] = useState([]);
+  const [article, setArticle] = useState(null);
 
   const history = useHistory();
+
+  const fetchArticle = async () => {
+    try {
+      const res = await articlesApi.show(slug);
+      setArticle({ ...res.data.article });
+    } catch (err) {
+      logger.error(err);
+    }
+  };
 
   const fetchCategories = async () => {
     try {
@@ -25,26 +36,38 @@ function CreateArticle() {
   };
 
   useEffect(() => {
+    fetchArticle();
     fetchCategories();
   }, []);
+
+  useEffect(() => {
+    if (article) {
+      setTitle(article.title);
+      setDesc(article.description);
+      setCategory({ value: `${article.category_id}`, label: article.category });
+    }
+  }, [article]);
 
   const handleSubmit = async (e, state = "Draft") => {
     e.preventDefault();
     setLoading(true);
     try {
-      await articlesApi.create({
-        article: {
-          title,
-          description: desc,
-          state,
-          category_id: category.value,
+      await articlesApi.update({
+        slug: article.slug,
+        payload: {
+          article: {
+            title,
+            description: desc,
+            state,
+            category_id: category.value,
+          },
         },
       });
       setTitle("");
       setDesc("");
       history.push("/articles");
     } catch (err) {
-      logger.error(err);
+      logger.erroror(err);
     } finally {
       setLoading(false);
     }
@@ -56,13 +79,13 @@ function CreateArticle() {
       loading={loading}
       title={title}
       desc={desc}
+      category={category}
       setTitle={setTitle}
       setDesc={setDesc}
-      category={category}
       setCategory={setCategory}
       categories={categories}
     />
   );
 }
 
-export default CreateArticle;
+export default EditArticle;
