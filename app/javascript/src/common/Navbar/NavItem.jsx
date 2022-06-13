@@ -10,7 +10,7 @@ function NavItem({ url = "/", title = "" }) {
   return (
     <Link to={url}>
       <Typography
-        style="h2"
+        style="h3"
         className={classnames({ "text-indigo-600": location.pathname === url })}
       >
         {title}
