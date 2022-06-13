@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from "react";
 
+import { Typography } from "neetoui";
 import { Container } from "neetoui/layouts";
 
 import articlesApi from "apis/articles";
 import categoriesApi from "apis/categories";
 
+import { TABLE_COLUMNS_FOR_DROPDOWN } from "./constants";
+import HeaderComponent from "./HeaderComponent";
 import MenubarComponent from "./MenubarComponent";
 
 function Articles() {
@@ -12,6 +15,7 @@ function Articles() {
   const [articlesCount, setArticlesCount] = useState({});
   const [categories, setCategories] = useState([]);
   const [selectedTab, setSelectedTab] = useState("All");
+  const [search, setSearch] = useState("");
 
   useEffect(() => {
     fetchArticles();
@@ -57,6 +61,10 @@ function Articles() {
     fetchArticles();
   }, [selectedTab]);
 
+  const filteredArticles = articles.filter(article =>
+    article.title.toLowerCase().includes(search.toLowerCase())
+  );
+
   return (
     <div className="flex">
       <MenubarComponent
@@ -66,7 +74,15 @@ function Articles() {
         setSelectedTab={setSelectedTab}
       />
       <Container>
-        {articles.map(article => (
+        <HeaderComponent
+          TABLE_COLUMNS={TABLE_COLUMNS_FOR_DROPDOWN}
+          search={search}
+          setSearch={setSearch}
+        />
+        <Typography style="h3">
+          {articlesCount?.Draft + articlesCount?.Published} Articles
+        </Typography>
+        {filteredArticles.map(article => (
           <div key={article.id}>
             <p>{article.name}</p>
             <p>{article.description}</p>
