@@ -1,11 +1,14 @@
 # frozen_string_literal: true
 
 class Article < ApplicationRecord
+  belongs_to :author_user, foreign_key: :author_user_id, class_name: "User"
+
   validates :title, presence: true
   validates :description, presence: true
   validates :slug, uniqueness: true
   validate :slug_not_changed
 
+  before_validation :set_user
   before_create :set_slug
 
   private
@@ -30,5 +33,9 @@ class Article < ApplicationRecord
       if slug_changed? && self.persisted?
         errors.add(:slug, "Slug is not allowed to be changed")
       end
+    end
+
+    def set_user
+      self.author_user_id = 1
     end
 end
