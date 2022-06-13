@@ -7,6 +7,7 @@ import { setAuthHeaders, registerIntercepts } from "apis/axios";
 import { initializeLogger } from "common/logger";
 import Navbar from "common/Navbar";
 import CreateArticle from "components/CreateArticle";
+import EUI from "components/EUI";
 
 const App = () => {
   const [loading, setLoading] = useState(true);
@@ -33,6 +34,7 @@ const App = () => {
             render={() => <div>Welcome to scribble app</div>}
           />
           <Route exact path="/articles/create" component={CreateArticle} />
+          <Route exact path="/articles/:slug" component={EUI} />
         </Switch>
       </Router>
     </>
