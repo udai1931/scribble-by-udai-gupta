@@ -49,7 +49,7 @@ function Form({
             style="bg-indigo-600"
             className="rounded-md bg-indigo-600 text-white"
           >
-            <li onClick={e => handleSubmit(e)}>Publish Article</li>
+            <li onClick={e => handleSubmit(e, "Published")}>Publish Article</li>
           </ActionDropdown>
           <Button
             title="Cancel"

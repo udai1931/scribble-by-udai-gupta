@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class Article < ApplicationRecord
+  enum state: { Draft: "Draft", Published: "Published" }
+
   belongs_to :author_user, foreign_key: :author_user_id, class_name: "User"
 
   validates :title, presence: true

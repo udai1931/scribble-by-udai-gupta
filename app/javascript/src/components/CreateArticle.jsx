@@ -12,16 +12,18 @@ function CreateArticle() {
 
   const history = useHistory();
 
-  const handleSubmit = async e => {
+  const handleSubmit = async (e, state = "Draft") => {
     e.preventDefault();
     setLoading(true);
     try {
-      await articlesApi.create({ article: { title, description: desc } });
+      await articlesApi.create({
+        article: { title, description: desc, state },
+      });
       setTitle("");
       setDesc("");
       history.push("/articles");
     } catch (err) {
-      logger.erroror(err);
+      logger.error(err);
     } finally {
       setLoading(false);
     }
