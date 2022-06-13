@@ -1,12 +1,17 @@
 import React, { useEffect, useState } from "react";
 
 import { Typography } from "neetoui";
+import { Table as NeetoUITable, Alert } from "neetoui";
 import { Container } from "neetoui/layouts";
+import { useHistory } from "react-router-dom";
 
 import articlesApi from "apis/articles";
 import categoriesApi from "apis/categories";
 
-import { TABLE_COLUMNS_FOR_DROPDOWN } from "./constants";
+import {
+  TABLE_COLUMNS_FOR_DROPDOWN,
+  TABLE_COLUMNS_FOR_TABLE,
+} from "./constants";
 import HeaderComponent from "./HeaderComponent";
 import MenubarComponent from "./MenubarComponent";
 
@@ -16,6 +21,10 @@ function Articles() {
   const [categories, setCategories] = useState([]);
   const [selectedTab, setSelectedTab] = useState("All");
   const [search, setSearch] = useState("");
+  const [showAlert, setShowAlert] = useState(false);
+  const [selectedArticle, setSelectedArticle] = useState(null);
+
+  const history = useHistory();
 
   useEffect(() => {
     fetchArticles();
@@ -57,6 +66,28 @@ function Articles() {
     }
   };
 
+  const handleActionClick = (event, article) => {
+    const action = event.target.getAttribute("action");
+    if (action === "edit") {
+      history.push(`/articles/edit/${article.slug}`);
+    } else if (action === "delete") {
+      setShowAlert(true);
+    }
+  };
+
+  const handleDeleteAction = async () => {
+    try {
+      await articlesApi.destroy(selectedArticle.slug);
+    } catch (err) {
+      logger.error(err);
+    } finally {
+      setShowAlert(false);
+      fetchArticlesCount();
+      fetchCategories();
+      fetchArticles();
+    }
+  };
+
   useEffect(() => {
     fetchArticles();
   }, [selectedTab]);
@@ -67,6 +98,14 @@ function Articles() {
 
   return (
     <div className="flex">
+      <Alert
+        size="sm"
+        isOpen={showAlert}
+        title="Delete Article"
+        message="Are you sure you want to delete? This action is irreversible."
+        onClose={() => setShowAlert(false)}
+        onSubmit={handleDeleteAction}
+      />
       <MenubarComponent
         articlesCount={articlesCount}
         categories={categories}
@@ -82,15 +121,16 @@ function Articles() {
         <Typography style="h3">
           {articlesCount?.Draft + articlesCount?.Published} Articles
         </Typography>
-        {filteredArticles.map(article => (
-          <div key={article.id}>
-            <p>{article.name}</p>
-            <p>{article.description}</p>
-            <p>{article.created_at}</p>
-            <p>{article.author}</p>
-            <p>{article.category}</p>
-          </div>
-        ))}
+        <NeetoUITable
+          allowRowClick
+          className="contact-table w-max-[75vw]"
+          columnData={TABLE_COLUMNS_FOR_TABLE}
+          rowData={filteredArticles}
+          onRowClick={(event, article) => {
+            setSelectedArticle(article);
+            handleActionClick(event, article);
+          }}
+        />
       </Container>
     </div>
   );

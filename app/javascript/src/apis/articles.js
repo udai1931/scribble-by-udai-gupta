@@ -12,6 +12,8 @@ const listByState = payload => axios.post(`/articles/state`, payload);
 
 const listByCategory = payload => axios.post(`/articles/category`, payload);
 
+const destroy = slug => axios.delete(`/articles/${slug}`);
+
 const articlesApi = {
   list,
   create,
@@ -19,6 +21,7 @@ const articlesApi = {
   count,
   listByState,
   listByCategory,
+  destroy,
 };
 
 export default articlesApi;
