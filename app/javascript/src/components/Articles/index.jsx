@@ -23,6 +23,7 @@ function Articles() {
   const [search, setSearch] = useState("");
   const [showAlert, setShowAlert] = useState(false);
   const [selectedArticle, setSelectedArticle] = useState(null);
+  const [unselectedColumns, setUnselectedColumns] = useState([]);
 
   const history = useHistory();
 
@@ -96,6 +97,10 @@ function Articles() {
     article.title.toLowerCase().includes(search.toLowerCase())
   );
 
+  const filteredColumns = TABLE_COLUMNS_FOR_TABLE.filter(
+    col => !unselectedColumns.includes(col.title)
+  );
+
   return (
     <div className="flex">
       <Alert
@@ -118,6 +123,8 @@ function Articles() {
           TABLE_COLUMNS={TABLE_COLUMNS_FOR_DROPDOWN}
           search={search}
           setSearch={setSearch}
+          unselectedColumns={unselectedColumns}
+          setUnselectedColumns={setUnselectedColumns}
         />
         <Typography style="h3">
           {articlesCount?.Draft + articlesCount?.Published} Articles
@@ -125,7 +132,7 @@ function Articles() {
         <NeetoUITable
           allowRowClick
           className="contact-table w-max-[75vw]"
-          columnData={TABLE_COLUMNS_FOR_TABLE}
+          columnData={filteredColumns}
           rowData={filteredArticles}
           onRowClick={(event, article) => {
             setSelectedArticle(article);
