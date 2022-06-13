@@ -7,8 +7,27 @@ import { useHistory } from "react-router-dom";
 
 import Button from "common/Button";
 
-function HeaderComponent({ TABLE_COLUMNS, search, setSearch }) {
+function HeaderComponent({
+  TABLE_COLUMNS,
+  search,
+  setSearch,
+  unselectedColumns,
+  setUnselectedColumns,
+}) {
   const history = useHistory();
+
+  const toggleColumn = value => {
+    setUnselectedColumns(prevState => {
+      const index = prevState.indexOf(value);
+      if (index === -1) {
+        prevState.push(value);
+      } else {
+        prevState.splice(index, 1);
+      }
+
+      return [...prevState];
+    });
+  };
 
   const headerActions = () => (
     <>
@@ -26,7 +45,13 @@ function HeaderComponent({ TABLE_COLUMNS, search, setSearch }) {
           Columns
         </Typography>
         {TABLE_COLUMNS.map(col => (
-          <Checkbox key={col.key} label={col.title} className="m-2" />
+          <Checkbox
+            key={col.key}
+            label={col.title}
+            className="m-2"
+            onChange={() => toggleColumn(col.title)}
+            checked={!unselectedColumns.includes(col.title)}
+          />
         ))}
       </Dropdown>
       <Button
