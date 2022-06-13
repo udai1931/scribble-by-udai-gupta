@@ -26,6 +26,19 @@ class ArticlesController < ApplicationController
     respond_with_success("Article was successfully deleted")
   end
 
+  def count
+    @draft = Article.Draft.length
+    @published = Article.Published.length
+  end
+
+  def state
+    @articles = Article.where(state: params[:state])
+  end
+
+  def category
+    @articles = Article.where(category_id: params[:category_id])
+  end
+
   private
 
     def article_params
