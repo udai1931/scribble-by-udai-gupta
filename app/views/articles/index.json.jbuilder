@@ -4,6 +4,8 @@ json.articles do
       :id,
       :title,
       :description,
-      :slug
+      :slug,
+      :state
+    json.created_at article.created_at.strftime("%d %b %Y")
   end
 end

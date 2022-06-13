@@ -12,7 +12,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_06_13_080514) do
+ActiveRecord::Schema.define(version: 2022_06_13_083536) do
 
   create_table "articles", force: :cascade do |t|
     t.string "title", null: false
@@ -21,6 +21,7 @@ ActiveRecord::Schema.define(version: 2022_06_13_080514) do
     t.string "description", null: false
     t.string "slug", null: false
     t.integer "author_user_id"
+    t.string "state", default: "Draft", null: false
   end
 
   create_table "users", force: :cascade do |t|
