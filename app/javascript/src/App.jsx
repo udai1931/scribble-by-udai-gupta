@@ -37,10 +37,10 @@ const App = () => {
             render={() => <div>Welcome to scribble app</div>}
           />
           <Route path="/settings" component={Settings} />
-          <Route exact path="/articles/edit/:slug" component={EditArticle} />
-          <Route exactpath="/articles/create" component={CreateArticle} />
           <Route exact path="/articles" component={Articles} />
+          <Route exactpath="/articles/create" component={CreateArticle} />
           <Route exact path="/articles/:slug" component={EUI} />
+          <Route exact path="/articles/edit/:slug" component={EditArticle} />
         </Switch>
       </Router>
     </>

@@ -2,6 +2,7 @@ import React from "react";
 
 import { Route, Switch } from "react-router-dom";
 
+import CategoriesSettings from "./CategoriesSettings";
 import GeneralSettings from "./GeneralSettings";
 import MenubarComponent from "./MenubarComponent";
 
@@ -16,9 +17,11 @@ function Settings() {
             path="/settings/redirections"
             component={() => <div>redirections Page</div>}
           />
-          <Route exact path="/settings/categories">
-            <div>categories Page</div>
-          </Route>
+          <Route
+            exact
+            path="/settings/categories"
+            component={CategoriesSettings}
+          />
           <Route exact path="/settings" component={GeneralSettings} />
         </Switch>
       </div>
