@@ -2,9 +2,13 @@
 
 class SitedetailsController < ApplicationController
   def update
-    category = SiteDetail.first
-    category.update!(sitedetails_params)
+    sitedetail = SiteDetail.first
+    sitedetail.update!(sitedetails_params)
     respond_with_success("Site details updated successfully")
+  end
+
+  def show
+    @sitedetail = SiteDetail.first
   end
 
   private

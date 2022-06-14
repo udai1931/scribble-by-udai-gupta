@@ -9,7 +9,7 @@ Rails.application.routes.draw do
       post :category, on: :collection
     end
     resources :categories, only: [:index, :create]
-    resource :sitedetails, only: [:update]
+    resource :sitedetails, only: [:update, :show]
   end
 
   root "home#index"
