@@ -12,7 +12,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_06_14_083248) do
+ActiveRecord::Schema.define(version: 2022_06_14_151359) do
 
   create_table "articles", force: :cascade do |t|
     t.string "title", null: false
@@ -31,6 +31,13 @@ ActiveRecord::Schema.define(version: 2022_06_14_083248) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["name"], name: "index_categories_on_name", unique: true
+  end
+
+  create_table "redirections", force: :cascade do |t|
+    t.string "from", null: false
+    t.string "to", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "site_details_tables", force: :cascade do |t|
