@@ -20,7 +20,7 @@ function Settings() {
         <Route
           exact
           path="/settings"
-          component={() => <div>Seeting Page</div>}
+          component={() => <div>Seetings Page</div>}
         />
       </Switch>
     </div>
