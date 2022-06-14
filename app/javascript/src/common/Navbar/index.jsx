@@ -34,7 +34,7 @@ function Navbar() {
       <div className="flex flex-row space-x-4">
         <NavItem url="/" title="Scribble" />
         <NavItem url="/articles" title="Articles" />
-        <NavItem url="/setting" title="Setting" />
+        <NavItem url="/settings" title="Settings" />
       </div>
       <div className="ml-auto">
         <Button
