@@ -5,6 +5,7 @@ import { Route, Switch } from "react-router-dom";
 import CategoriesSettings from "./CategoriesSettings";
 import GeneralSettings from "./GeneralSettings";
 import MenubarComponent from "./MenubarComponent";
+import RedirectionsComponent from "./RedirectionsComponent";
 
 function Settings() {
   return (
@@ -15,7 +16,7 @@ function Settings() {
           <Route
             exact
             path="/settings/redirections"
-            component={() => <div>redirections Page</div>}
+            component={RedirectionsComponent}
           />
           <Route
             exact
