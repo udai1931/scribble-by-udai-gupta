@@ -10,7 +10,7 @@ Rails.application.routes.draw do
     end
     resources :categories, only: [:index, :create, :update, :destroy], param: :id
     resource :sitedetails, only: [:update, :show]
-    resources :resources, only: [:index, :create, :update, :destroy], param: :id
+    resources :redirections, only: [:index, :create, :update, :destroy], param: :id
   end
 
   root "home#index"

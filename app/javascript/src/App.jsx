@@ -1,9 +1,15 @@
 import React, { useEffect, useState } from "react";
 
-import { Route, Switch, BrowserRouter as Router } from "react-router-dom";
+import {
+  Route,
+  Switch,
+  BrowserRouter as Router,
+  Redirect,
+} from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 
 import { setAuthHeaders, registerIntercepts } from "apis/axios";
+import redirectionsApi from "apis/redirections";
 import { initializeLogger } from "common/logger";
 import Navbar from "common/Navbar";
 import Articles from "components/Articles";
@@ -15,11 +21,22 @@ import Settings from "components/Settings";
 
 const App = () => {
   const [loading, setLoading] = useState(true);
+  const [redirections, setRedirections] = useState([]);
+
+  const fetchRedirections = async () => {
+    try {
+      const res = await redirectionsApi.list();
+      setRedirections([...res.data.redirections]);
+    } catch (err) {
+      logger.error(err);
+    }
+  };
 
   useEffect(() => {
     registerIntercepts();
     initializeLogger();
     setAuthHeaders(setLoading);
+    fetchRedirections();
   }, []);
 
   if (loading) {
@@ -32,6 +49,9 @@ const App = () => {
       <Router>
         <Navbar />
         <Switch>
+          {redirections.map(({ from, to, id }) => (
+            <Redirect key={id} exact from={from} to={to} />
+          ))}
           <Route
             exact
             path="/"
