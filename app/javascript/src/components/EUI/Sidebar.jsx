@@ -28,13 +28,6 @@ function Sidebar() {
       : setSelectedCategory(name);
   };
 
-  // const articlesList = (articles) => {
-  //   console.log(articles)
-  //   return (
-
-  //   )
-  // }
-
   useEffect(() => {
     fetchCategories();
   });

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 import { ExternalLink } from "neetoicons";
-import { useHistory, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import articlesApi from "apis/articles";
 import Button from "common/Button";
@@ -9,7 +9,6 @@ import Button from "common/Button";
 import NavItem from "./NavItem";
 
 function Navbar() {
-  const history = useHistory();
   const [articleSlug, setArticleSlug] = useState("");
 
   const fetchArticles = async () => {
@@ -25,10 +24,6 @@ function Navbar() {
     fetchArticles();
   }, []);
 
-  const handleClick = () => {
-    history.push(`/articles/${articleSlug}`);
-  };
-
   return (
     <div className="flex h-16 items-center border-b-2 px-12">
       <div className="flex flex-row space-x-4">
@@ -41,7 +36,6 @@ function Navbar() {
           <Button
             title="Preview"
             icon={<ExternalLink size={16} />}
-            onClick={handleClick}
             bgColor="gray-300"
             color="black"
           />
