@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 import { ExternalLink } from "neetoicons";
-import { useHistory } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
 
 import articlesApi from "apis/articles";
 import Button from "common/Button";
@@ -37,13 +37,15 @@ function Navbar() {
         <NavItem url="/settings" title="Settings" />
       </div>
       <div className="ml-auto">
-        <Button
-          title="Preview"
-          icon={<ExternalLink size={16} />}
-          onClick={handleClick}
-          bgColor="gray-300"
-          color="black"
-        />
+        <Link to={`/articles/${articleSlug}`} target="_blank">
+          <Button
+            title="Preview"
+            icon={<ExternalLink size={16} />}
+            onClick={handleClick}
+            bgColor="gray-300"
+            color="black"
+          />
+        </Link>
       </div>
     </div>
   );
