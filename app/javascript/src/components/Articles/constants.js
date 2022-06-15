@@ -43,6 +43,7 @@ export const TABLE_COLUMNS_FOR_TABLE = [
     key: "title",
     title: "Title",
     width: "20%",
+    sorter: (a, b) => a.title.localeCompare(b.title),
   },
   {
     dataIndex: "author",

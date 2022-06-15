@@ -15,6 +15,7 @@ class Article < ApplicationRecord
   before_create :set_slug
   after_create :increment_count
   after_destroy :decrement_count
+  before_update :update_count
 
   private
 
@@ -54,5 +55,17 @@ class Article < ApplicationRecord
       category = self.category
       category.count = category.count - 1
       category.save!
+    end
+
+    def update_count
+      old_category_id = self.category_id_was
+      new_category = self.category
+      if old_category_id != new_category.id
+        new_category.count = new_category.count + 1
+        new_category.save!
+        old_category = Category.find_by!(id: old_category_id)
+        old_category.count = old_category.count - 1
+        old_category.save!
+      end
     end
 end
