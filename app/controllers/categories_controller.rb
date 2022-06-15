@@ -9,12 +9,11 @@ class CategoriesController < ApplicationController
   end
 
   def index
-    @categories = Category.all
+    @categories = Category.order(:index)
   end
 
   def update
     @category.update!(category_params)
-    respond_with_success("Category was successfully updated")
   end
 
   def destroy
@@ -23,13 +22,13 @@ class CategoriesController < ApplicationController
   end
 
   def articles
-    @categories = Category.all
+    @categories = Category.order(:index)
   end
 
   private
 
     def category_params
-      params.require(:category).permit(:name)
+      params.require(:category).permit(:name, :index)
     end
 
     def load_category!
