@@ -8,7 +8,9 @@ Rails.application.routes.draw do
       post :state, on: :collection
       post :category, on: :collection
     end
-    resources :categories, only: [:index, :create, :update, :destroy], param: :id
+    resources :categories, only: [:index, :create, :update, :destroy], param: :id do
+      get :articles, on: :collection
+    end
     resource :sitedetails, only: [:update, :show]
     resources :redirections, only: [:index, :create, :update, :destroy], param: :id
   end

@@ -22,6 +22,10 @@ class CategoriesController < ApplicationController
     respond_with_success("Category was successfully deleted")
   end
 
+  def articles
+    @categories = Category.all
+  end
+
   private
 
     def category_params

@@ -7,6 +7,7 @@ import { useParams } from "react-router-dom";
 import articlesApi from "apis/articles";
 
 import Header from "./Header";
+import Sidebar from "./Sidebar";
 
 function EUI() {
   const { slug } = useParams();
@@ -27,14 +28,16 @@ function EUI() {
 
   useEffect(() => {
     fetchArticle();
-  }, []);
+  }, [slug]);
 
   return (
     <>
       <Header />
       <div className="flex" style={{ minHeight: "calc(100vh - 4rem)" }}>
-        <div className="h-min-full w-1/4 border-r-2 p-4">Sidebar</div>
-        <div className="w-3/4 p-4">
+        <div className="h-min-full w-1/5 border-r-2 p-4">
+          <Sidebar />
+        </div>
+        <div className="w-4/5 p-4">
           {loading ? (
             <PageLoader className="flex h-full w-full items-center justify-center" />
           ) : (
