@@ -1,0 +1,25 @@
+.articles-container {
+  height: calc(100vh - 4rem);
+}
+
+.menubar-container {
+  height: calc(100vh - 4rem);
+  top: 4rem;
+  overflow: none;
+}
+
+.categories-container {
+  overflow: auto;
+  height: 25rem;
+}
+
+.table-container{
+  max-height: calc(100vh - 4rem);
+  width: calc(100vw - 324px);
+  margin-top: 4rem;
+  margin-left: 324px;
+}
+
+.table-container tr:nth-child(odd){
+  background-color: #F8F9F9;
+}

@@ -35,11 +35,10 @@ function HeaderComponent({
         buttonProps={{
           onClick: function noRefCheck() {},
         }}
-        buttonStyle="bg-indigo-600"
+        buttonStyle="secondary"
         label="Columns"
         position="bottom-end"
         closeOnSelect={false}
-        className="bg-indigo-600"
       >
         <Typography style="h4" className="px-2">
           Columns

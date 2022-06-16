@@ -9,7 +9,7 @@ function MenubarComponent() {
   const [selectedTab, setSelectedTab] = useState("General");
 
   return (
-    <div className="bg-white" style={{ background: "white" }}>
+    <div className="menubar-container">
       <MenuBar
         showMenu
         className="border-r-2 bg-white"

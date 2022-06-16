@@ -17,6 +17,7 @@ import CreateArticle from "components/CreateArticle";
 import EditArticle from "components/EditArticle";
 import EnterPassword from "components/EnterPassword";
 import EUI from "components/EUI";
+import Home from "components/Home";
 import Settings from "components/Settings";
 
 const App = () => {
@@ -52,11 +53,7 @@ const App = () => {
           {redirections.map(({ from, to, id }) => (
             <Redirect key={id} exact from={from} to={to} />
           ))}
-          <Route
-            exact
-            path="/"
-            render={() => <div>Welcome to scribble app</div>}
-          />
+          <Route exact path="/" component={Home} />
           <Route path="/settings" component={Settings} />
           <Route exact path="/articles" component={Articles} />
           <Route exact path="/articles/create" component={CreateArticle} />
