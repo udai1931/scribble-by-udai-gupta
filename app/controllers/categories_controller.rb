@@ -18,7 +18,6 @@ class CategoriesController < ApplicationController
 
   def destroy
     @category.destroy!
-    respond_with_success("Category was successfully deleted")
   end
 
   def articles

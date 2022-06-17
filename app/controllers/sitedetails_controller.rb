@@ -4,7 +4,6 @@ class SitedetailsController < ApplicationController
   def update
     sitedetail = SiteDetail.first
     sitedetail.update!(sitedetails_params)
-    respond_with_success("Site details updated successfully")
   end
 
   def show
