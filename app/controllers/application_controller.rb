@@ -1,12 +1,28 @@
 # frozen_string_literal: true
 
 class ApplicationController < ActionController::Base
+  # before_action :authenticate_user_using_x_auth_token
+
   rescue_from ActiveRecord::RecordNotFound, with: :handle_record_not_found
   rescue_from ActiveRecord::RecordInvalid, with: :handle_validation_error
   rescue_from ActiveRecord::RecordNotUnique, with: :handle_record_not_unique
   rescue_from ActionController::ParameterMissing, with: :handle_api_error
 
   private
+
+    def authenticate_user_using_x_auth_token
+      expiry = request.headers["X-Auth-Expiry"].presence
+      auth_token = request.headers["X-Auth-Token"]
+      details = SiteDetail.first
+      is_valid_token = auth_token && ActiveSupport::SecurityUtils.secure_compare(details.auth_token, auth_token)
+      unless is_valid_token && expiry && expiry.to_i > Time.now.to_i
+        respond_with_error("Session Expired! ", :unauthorized)
+      end
+    end
+
+    def current_user
+      @current_user
+    end
 
     def handle_validation_error(exception)
       respond_with_error(exception)

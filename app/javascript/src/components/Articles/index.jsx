@@ -6,6 +6,7 @@ import { useHistory } from "react-router-dom";
 
 import articlesApi from "apis/articles";
 import categoriesApi from "apis/categories";
+import Navbar from "common/Navbar";
 
 import {
   TABLE_COLUMNS_FOR_DROPDOWN,
@@ -101,47 +102,50 @@ function Articles() {
   );
 
   return (
-    <div className="articles-container flex">
-      <Alert
-        size="sm"
-        isOpen={showAlert}
-        title="Delete Article"
-        message="Are you sure you want to delete? This action is irreversible."
-        onClose={() => setShowAlert(false)}
-        onSubmit={handleDeleteAction}
-      />
-      <div className="menubar-container fixed">
-        <MenubarComponent
-          articlesCount={articlesCount}
-          categories={categories}
-          setCategories={setCategories}
-          selectedTab={selectedTab}
-          setSelectedTab={setSelectedTab}
+    <>
+      <Navbar />
+      <div className="articles-container flex">
+        <Alert
+          size="sm"
+          isOpen={showAlert}
+          title="Delete Article"
+          message="Are you sure you want to delete? This action is irreversible."
+          onClose={() => setShowAlert(false)}
+          onSubmit={handleDeleteAction}
         />
+        <div className="menubar-container fixed">
+          <MenubarComponent
+            articlesCount={articlesCount}
+            categories={categories}
+            setCategories={setCategories}
+            selectedTab={selectedTab}
+            setSelectedTab={setSelectedTab}
+          />
+        </div>
+        <div className="table-container px-4">
+          <HeaderComponent
+            TABLE_COLUMNS={TABLE_COLUMNS_FOR_DROPDOWN}
+            search={search}
+            setSearch={setSearch}
+            unselectedColumns={unselectedColumns}
+            setUnselectedColumns={setUnselectedColumns}
+          />
+          <Typography style="h3">
+            {articlesCount?.Draft + articlesCount?.Published} Articles
+          </Typography>
+          <NeetoUITable
+            allowRowClick
+            className="contact-table w-max-[75vw]"
+            columnData={filteredColumns}
+            rowData={filteredArticles}
+            onRowClick={(event, article) => {
+              setSelectedArticle(article);
+              handleActionClick(event, article);
+            }}
+          />
+        </div>
       </div>
-      <div className="table-container px-4">
-        <HeaderComponent
-          TABLE_COLUMNS={TABLE_COLUMNS_FOR_DROPDOWN}
-          search={search}
-          setSearch={setSearch}
-          unselectedColumns={unselectedColumns}
-          setUnselectedColumns={setUnselectedColumns}
-        />
-        <Typography style="h3">
-          {articlesCount?.Draft + articlesCount?.Published} Articles
-        </Typography>
-        <NeetoUITable
-          allowRowClick
-          className="contact-table w-max-[75vw]"
-          columnData={filteredColumns}
-          rowData={filteredArticles}
-          onRowClick={(event, article) => {
-            setSelectedArticle(article);
-            handleActionClick(event, article);
-          }}
-        />
-      </div>
-    </div>
+    </>
   );
 }
 

@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class SitedetailsController < ApplicationController
+  # skip_before_action :authenticate_user_using_x_auth_token, only: :show
+
   def update
     sitedetail = SiteDetail.first
     sitedetail.update!(sitedetails_params)

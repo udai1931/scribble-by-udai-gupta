@@ -1,8 +1,6 @@
 import axios from "axios";
 import { Toastr } from "neetoui";
 
-import { setToLocalStorage } from "utils/storage";
-
 axios.defaults.baseURL = "/";
 
 const setAuthHeaders = (setLoading = () => null) => {
@@ -14,10 +12,10 @@ const setAuthHeaders = (setLoading = () => null) => {
       .getAttribute("content"),
   };
   const token = localStorage.getItem("authToken");
-  const email = localStorage.getItem("authEmail");
-  if (token && email) {
-    axios.defaults.headers["X-Auth-Email"] = email;
-    axios.defaults.headers["X-Auth-Token"] = token;
+  const expiry = localStorage.getItem("expiry");
+  if (token && expiry) {
+    axios.defaults.headers["X-Auth-Token"] = JSON.parse(token);
+    axios.defaults.headers["X-Auth-Expiry"] = `${expiry}`;
   }
   setLoading(false);
 };
@@ -35,14 +33,14 @@ const handleSuccessResponse = response => {
 
 const handleErrorResponse = axiosErrorObject => {
   if (axiosErrorObject.response?.status === 401) {
-    setToLocalStorage({ authToken: null, email: null, userId: null });
-    setTimeout(() => (window.location.href = "/"), 2000);
+    // setToLocalStorage({ authToken: null, expiry: null});
+    // setTimeout(() => (window.location.href = "/login"), 2000);
   }
   Toastr.error(
     axiosErrorObject.response?.data?.error || "Something went wrong!"
   );
   if (axiosErrorObject.response?.status === 423) {
-    window.location.href = "/";
+    window.location.href = "/login";
   }
 
   return Promise.reject(axiosErrorObject);

@@ -11,7 +11,6 @@ import { ToastContainer } from "react-toastify";
 import { setAuthHeaders, registerIntercepts } from "apis/axios";
 import redirectionsApi from "apis/redirections";
 import { initializeLogger } from "common/logger";
-import Navbar from "common/Navbar";
 import Articles from "components/Articles";
 import CreateArticle from "components/CreateArticle";
 import EditArticle from "components/EditArticle";
@@ -20,9 +19,27 @@ import EUI from "components/EUI";
 import Home from "components/Home";
 import Settings from "components/Settings";
 
+import { getFromLocalStorage } from "./utils/storage";
+
 const App = () => {
   const [loading, setLoading] = useState(true);
   const [redirections, setRedirections] = useState([]);
+  const authToken = getFromLocalStorage("authToken");
+  const expiry = String(getFromLocalStorage("expiry") || "");
+  const currentTime = String(new Date().getTime());
+  const isLoggedIn =
+    authToken && expiry && expiry.localeCompare(currentTime) === 1;
+
+  useEffect(() => {
+    registerIntercepts();
+    initializeLogger();
+    setAuthHeaders(setLoading);
+    fetchRedirections();
+  }, []);
+
+  if (!isLoggedIn) {
+    return <EnterPassword />;
+  }
 
   const fetchRedirections = async () => {
     try {
@@ -33,13 +50,6 @@ const App = () => {
     }
   };
 
-  useEffect(() => {
-    registerIntercepts();
-    initializeLogger();
-    setAuthHeaders(setLoading);
-    fetchRedirections();
-  }, []);
-
   if (loading) {
     return <h1>Loading...</h1>;
   }
@@ -48,7 +58,7 @@ const App = () => {
     <>
       <ToastContainer />
       <Router>
-        <Navbar />
+        {/* <Navbar /> */}
         <Switch>
           {redirections.map(({ from, to, id }) => (
             <Redirect key={id} exact from={from} to={to} />
@@ -59,7 +69,7 @@ const App = () => {
           <Route exact path="/articles/create" component={CreateArticle} />
           <Route exact path="/articles/:slug" component={EUI} />
           <Route exact path="/articles/edit/:slug" component={EditArticle} />
-          <Route exact path="/password" component={EnterPassword} />
+          <Route exact path="/login" component={EnterPassword} />
         </Switch>
       </Router>
     </>
