@@ -91,7 +91,7 @@ function MenubarComponent({
         handleSubmit={addNewCategory}
       />
 
-      <div className="overflow-y-auto">
+      <div className="categories-container">
         {filteredCategories.length > 0 &&
           filteredCategories.map(category => (
             <MenuBar.Block

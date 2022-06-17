@@ -92,13 +92,14 @@ function CategoriesSettings() {
 
   const updateIndexes = async items => {
     try {
-      items.forEach(async (item, index) => {
+      for (let index = 0; index < items.length; index++) {
+        const item = items[index];
         if (item.index === index + 1) return;
         await categoriesApi.update({
           id: item.id,
           payload: { index: index + 1 },
         });
-      });
+      }
     } catch (err) {
       logger.error(err);
     }

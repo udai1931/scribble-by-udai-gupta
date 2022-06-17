@@ -17,7 +17,7 @@ function Form({
   handleClose,
 }) {
   return (
-    <div className="flex justify-center">
+    <div className="mt-16 flex justify-center">
       <div className="form-wrapper w-5/12 p-2 text-gray-600">
         <div className="m-2 mb-4 flex justify-between">
           <Input

@@ -30,7 +30,7 @@ function Sidebar() {
 
   useEffect(() => {
     fetchCategories();
-  });
+  }, []);
 
   return (
     <div className="p-4">

@@ -11,7 +11,7 @@ function Settings() {
   return (
     <div className="flex">
       <MenubarComponent />
-      <div className="flex w-full justify-center">
+      <div className="component-container flex w-full justify-center">
         <Switch>
           <Route
             exact

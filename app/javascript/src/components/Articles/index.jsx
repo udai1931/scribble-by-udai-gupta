@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 
 import { Typography } from "neetoui";
 import { Table as NeetoUITable, Alert } from "neetoui";
-import { Container } from "neetoui/layouts";
 import { useHistory } from "react-router-dom";
 
 import articlesApi from "apis/articles";
@@ -102,7 +101,7 @@ function Articles() {
   );
 
   return (
-    <div className="flex">
+    <div className="articles-container flex">
       <Alert
         size="sm"
         isOpen={showAlert}
@@ -111,14 +110,16 @@ function Articles() {
         onClose={() => setShowAlert(false)}
         onSubmit={handleDeleteAction}
       />
-      <MenubarComponent
-        articlesCount={articlesCount}
-        categories={categories}
-        setCategories={setCategories}
-        selectedTab={selectedTab}
-        setSelectedTab={setSelectedTab}
-      />
-      <Container>
+      <div className="menubar-container fixed">
+        <MenubarComponent
+          articlesCount={articlesCount}
+          categories={categories}
+          setCategories={setCategories}
+          selectedTab={selectedTab}
+          setSelectedTab={setSelectedTab}
+        />
+      </div>
+      <div className="table-container px-4">
         <HeaderComponent
           TABLE_COLUMNS={TABLE_COLUMNS_FOR_DROPDOWN}
           search={search}
@@ -139,7 +140,7 @@ function Articles() {
             handleActionClick(event, article);
           }}
         />
-      </Container>
+      </div>
     </div>
   );
 }
