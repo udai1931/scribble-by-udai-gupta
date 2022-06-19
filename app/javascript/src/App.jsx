@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 
+import { PageLoader } from "neetoui";
 import {
   Route,
   Switch,
@@ -10,8 +11,9 @@ import { ToastContainer } from "react-toastify";
 
 import { setAuthHeaders, registerIntercepts } from "apis/axios";
 import redirectionsApi from "apis/redirections";
+import sitedetailsApi from "apis/sitedetails";
 import { initializeLogger } from "common/logger";
-import Navbar from "common/Navbar";
+import PrivateRoute from "common/PrivateRoute";
 import Articles from "components/Articles";
 import CreateArticle from "components/CreateArticle";
 import EditArticle from "components/EditArticle";
@@ -20,9 +22,18 @@ import EUI from "components/EUI";
 import Home from "components/Home";
 import Settings from "components/Settings";
 
+import { getFromLocalStorage } from "./utils/storage";
+
 const App = () => {
   const [loading, setLoading] = useState(true);
   const [redirections, setRedirections] = useState([]);
+  const [siteDetails, setSiteDetails] = useState({});
+  const authToken = getFromLocalStorage("authToken");
+  const expiry = String(getFromLocalStorage("expiry") || "");
+  const currentTime = String(new Date().getTime());
+  const isLoggedIn =
+    siteDetails?.status === false ||
+    (authToken && expiry && expiry.localeCompare(currentTime) === 1);
 
   const fetchRedirections = async () => {
     try {
@@ -33,33 +44,79 @@ const App = () => {
     }
   };
 
+  const fetchNameAndStatus = async () => {
+    try {
+      const res = await sitedetailsApi.show();
+      setSiteDetails(res.data.details);
+    } catch (err) {
+      logger.error(err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
     registerIntercepts();
     initializeLogger();
-    setAuthHeaders(setLoading);
+    setAuthHeaders();
     fetchRedirections();
+    fetchNameAndStatus();
   }, []);
 
   if (loading) {
-    return <h1>Loading...</h1>;
+    return (
+      <div className="h-screen w-full">
+        <PageLoader />
+      </div>
+    );
   }
 
   return (
     <>
       <ToastContainer />
       <Router>
-        <Navbar />
         <Switch>
+          <Route exact path="/login">
+            <EnterPassword isLoggedIn={isLoggedIn} name={siteDetails.name} />
+          </Route>
           {redirections.map(({ from, to, id }) => (
             <Redirect key={id} exact from={from} to={to} />
           ))}
-          <Route exact path="/" component={Home} />
-          <Route path="/settings" component={Settings} />
-          <Route exact path="/articles" component={Articles} />
-          <Route exact path="/articles/create" component={CreateArticle} />
-          <Route exact path="/articles/:slug" component={EUI} />
-          <Route exact path="/articles/edit/:slug" component={EditArticle} />
-          <Route exact path="/password" component={EnterPassword} />
+          <PrivateRoute
+            exact
+            condition={isLoggedIn}
+            path="/"
+            component={Home}
+          />
+          <PrivateRoute
+            condition={isLoggedIn}
+            path="/settings"
+            component={Settings}
+          />
+          <PrivateRoute
+            exact
+            condition={isLoggedIn}
+            path="/articles"
+            component={Articles}
+          />
+          <PrivateRoute
+            exact
+            condition={isLoggedIn}
+            path="/articles/create"
+            component={CreateArticle}
+          />
+          <PrivateRoute
+            exact
+            condition={isLoggedIn}
+            path="/articles/:slug"
+            component={EUI}
+          />
+          <PrivateRoute
+            exact
+            condition={isLoggedIn}
+            path="/articles/edit/:slug"
+            component={EditArticle}
+          />
         </Switch>
       </Router>
     </>

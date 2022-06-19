@@ -11,8 +11,9 @@ Rails.application.routes.draw do
     resources :categories, only: [:index, :create, :update, :destroy], param: :id do
       get :articles, on: :collection
     end
-    resource :sitedetails, only: [:update, :show]
     resources :redirections, only: [:index, :create, :update, :destroy], param: :id
+    resource :sitedetails, only: [:update, :show]
+    resource :sessions, only: [:create]
   end
 
   root "home#index"

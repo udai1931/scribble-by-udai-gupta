@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class RedirectionsController < ApplicationController
+  skip_before_action :authenticate_user_using_x_auth_token, only: :index
+
   before_action :load_redirection!, only: %i[update destroy]
 
   def create
