@@ -16,12 +16,10 @@ class RedirectionsController < ApplicationController
 
   def update
     @redirection.update!(redirection_params)
-    respond_with_success("Redirection was successfully updated")
   end
 
   def destroy
     @redirection.destroy!
-    respond_with_success("Redirection was successfully deleted")
   end
 
   private

@@ -32,14 +32,16 @@ function Navbar() {
         <NavItem url="/settings" title="Settings" />
       </div>
       <div className="ml-auto">
-        <Link to={`/articles/${articleSlug}`} target="_blank">
-          <Button
-            title="Preview"
-            icon={<ExternalLink size={16} />}
-            bgColor="gray-300"
-            color="black"
-          />
-        </Link>
+        {articleSlug && (
+          <Link to={`/articles/${articleSlug}`} target="_blank">
+            <Button
+              title="Preview"
+              icon={<ExternalLink size={16} />}
+              bgColor="gray-300"
+              color="black"
+            />
+          </Link>
+        )}
       </div>
     </div>
   );
