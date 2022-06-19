@@ -6,11 +6,7 @@ class SitedetailsController < ApplicationController
   def update
     sitedetail = SiteDetail.first
     sitedetail.update!({ name: sitedetails_params["name"], password: sitedetails_params["password"] })
-    puts "(((((((((((((((((((((((((#{@@auth_active}((((((((((((((((((((((((((((((("
-    puts @@auth_active
     @@auth_active = sitedetails_params["status"]
-    puts @@auth_active
-
     respond_with_success("Site details updated successfully")
   end
 

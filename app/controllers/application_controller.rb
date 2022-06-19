@@ -23,7 +23,6 @@ class ApplicationController < ActionController::Base
       unless is_valid_token && expiry && expiry.to_i > Time.now.to_i
         respond_with_error("Session Expired! ", :unauthorized)
       end
-      puts "(((((((((((((((((((((((((((((((((((((((((((((("
     end
 
     def handle_validation_error(exception)
