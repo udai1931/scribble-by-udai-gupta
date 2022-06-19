@@ -1,9 +1,11 @@
 import axios from "axios";
 import { Toastr } from "neetoui";
 
+import { setToLocalStorage } from "utils/storage";
+
 axios.defaults.baseURL = "/";
 
-const setAuthHeaders = (setLoading = () => null) => {
+const setAuthHeaders = () => {
   axios.defaults.headers = {
     Accept: "application/json",
     "Content-Type": "application/json",
@@ -17,7 +19,6 @@ const setAuthHeaders = (setLoading = () => null) => {
     axios.defaults.headers["X-Auth-Token"] = JSON.parse(token);
     axios.defaults.headers["X-Auth-Expiry"] = `${expiry}`;
   }
-  setLoading(false);
 };
 
 const handleSuccessResponse = response => {
@@ -33,8 +34,8 @@ const handleSuccessResponse = response => {
 
 const handleErrorResponse = axiosErrorObject => {
   if (axiosErrorObject.response?.status === 401) {
-    // setToLocalStorage({ authToken: null, expiry: null});
-    // setTimeout(() => (window.location.href = "/login"), 2000);
+    setToLocalStorage({ authToken: null, expiry: null });
+    setTimeout(() => (window.location.href = "/login"), 2000);
   }
   Toastr.error(
     axiosErrorObject.response?.data?.error || "Something went wrong!"

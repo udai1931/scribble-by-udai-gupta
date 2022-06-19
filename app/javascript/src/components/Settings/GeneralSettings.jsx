@@ -13,7 +13,7 @@ function GeneralSettings() {
   const updateDetails = async () => {
     try {
       await sitedetailsApi.update({
-        details: { name: name, password: password },
+        details: { name, password, status: showPassword },
       });
     } catch (err) {
       logger.error(err);
@@ -22,8 +22,9 @@ function GeneralSettings() {
 
   const fetchDetails = async () => {
     try {
-      const res = await sitedetailsApi.show({ details: { name, password } });
+      const res = await sitedetailsApi.show();
       setName(res.data.details.name);
+      setShowPassword(res.data.details.status);
     } catch (err) {
       logger.error(err);
     }
@@ -53,6 +54,7 @@ function GeneralSettings() {
       <div className="mb-4 font-bold">
         <Checkbox
           label="Password Protect Knowledge Base"
+          checked={showPassword}
           onChange={() => setShowPassword(prev => !prev)}
           className="font-bold"
         />

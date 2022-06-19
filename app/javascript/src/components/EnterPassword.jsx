@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 
 import { Typography, Input } from "neetoui";
+import { useHistory } from "react-router-dom";
 
-import sitedetailsApi from "apis/sitedetails";
 import Button from "common/Button";
 
 import bannerImage from "../../assets/images/password.png";
@@ -10,16 +10,13 @@ import authApi from "../apis/auth";
 import { setAuthHeaders } from "../apis/axios";
 import { setToLocalStorage } from "../utils/storage";
 
-function EnterPassword() {
+function EnterPassword({ isLoggedIn, name }) {
   const [password, setPassword] = useState("");
+  const history = useHistory();
 
-  const fetchName = async () => {
-    try {
-      await sitedetailsApi.show();
-    } catch (err) {
-      logger.error(err);
-    }
-  };
+  if (isLoggedIn) {
+    history.push("/articles");
+  }
 
   const handleClick = async () => {
     try {
@@ -29,23 +26,19 @@ function EnterPassword() {
         expiry: res.data.expiry,
       });
       setAuthHeaders();
-      // window.location.href = "/"
+      window.location.href = "/articles";
     } catch (err) {
       logger.error(err);
     }
   };
 
-  useEffect(() => {
-    fetchName();
-  }, []);
-
   return (
     <div className="flex justify-center">
       <div className="w-68 mt-24 flex h-full flex-col">
         <img src={bannerImage} className="h-48" />
-        <Typography style="h2">Spinkart is password protected!</Typography>
+        <Typography style="h2">{name} is password protected!</Typography>
         <Typography style="body1">
-          Enter Password to gain access to Spinkart
+          Enter Password to gain access to {name}
         </Typography>
         <div className="my-6">
           <Input
