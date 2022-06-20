@@ -31,3 +31,19 @@ class ActiveSupport::TestCase
 
   # Add more helper methods to be used by all tests here...
 end
+
+def headers(details, options = {})
+  {
+    Accept: "application/json",
+    "Content_Type" => "application/json",
+    "X-Auth-Token" => details.auth_token,
+    "X-Auth-Expiry" => Time.now.to_i + 10.minute.to_i
+  }.merge(options)
+end
+
+def headers_without_token
+  {
+    Accept: "application/json",
+    "Content_Type" => "application/json"
+  }
+end
