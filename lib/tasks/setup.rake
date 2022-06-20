@@ -37,6 +37,7 @@ end
 
 def create_sample_data!
   create_user!
+  create_site_details!
 end
 
 def create_user!(options = {})
