@@ -33,6 +33,8 @@ gem "bootsnap", ">= 1.4.4", require: false
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem "byebug", platforms: [:mri, :mingw, :x64_mingw]
+  gem "factory_bot_rails"
+  gem "faker"
   gem "rubocop"
   gem "rubocop-rails"
 end
@@ -58,3 +60,5 @@ gem "tzinfo-data", platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem "react-rails"
 
 gem "bcrypt", "~> 3.1.13"
+
+gem "simplecov", require: false, group: :test
