@@ -35,12 +35,11 @@ function CategoriesSettings() {
   const createCategory = async () => {
     try {
       await categoriesApi.create({ name: newCategory });
-    } catch (err) {
-      logger.error(err);
-    } finally {
       setNewCategory("");
       setNewCategoryToggle(false);
       fetchCategories();
+    } catch (err) {
+      logger.error(err);
     }
   };
 
@@ -50,24 +49,22 @@ function CategoriesSettings() {
         id: editCategoryToggle,
         payload: { name: editCategory },
       });
-    } catch (err) {
-      logger.error(err);
-    } finally {
       setEditCategory("");
       setEditCategoryToggle("");
       fetchCategories();
+    } catch (err) {
+      logger.error(err);
     }
   };
 
   const deleteCategory = async () => {
     try {
       await categoriesApi.destroy({ id: selectedCategoryForDelete });
-    } catch (err) {
-      logger.error(err);
-    } finally {
       setShowAlert(false);
       setSelectedCategoryForDelete("");
       fetchCategories();
+    } catch (err) {
+      logger.error(err);
     }
   };
 
@@ -108,8 +105,8 @@ function CategoriesSettings() {
   return (
     <div className="my-8 w-6/12">
       <Alert
-        size="sm"
         isOpen={showAlert}
+        size="sm"
         title="Delete Category"
         message="Are you sure you want to delete? This action is irreversible."
         onClose={() => setShowAlert(false)}

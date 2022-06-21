@@ -3,12 +3,12 @@ import React, { useState } from "react";
 import { Typography, Input } from "neetoui";
 import { useHistory } from "react-router-dom";
 
+import authApi from "apis/auth";
+import { setAuthHeaders } from "apis/axios";
 import Button from "common/Button";
+import { setToLocalStorage } from "utils/storage";
 
 import bannerImage from "../../assets/images/password.png";
-import authApi from "../apis/auth";
-import { setAuthHeaders } from "../apis/axios";
-import { setToLocalStorage } from "../utils/storage";
 
 function EnterPassword({ isLoggedIn, name }) {
   const [password, setPassword] = useState("");

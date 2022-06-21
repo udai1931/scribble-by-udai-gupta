@@ -51,8 +51,6 @@ function CreateArticle() {
   };
   return (
     <Form
-      handleSubmit={handleSubmit}
-      handleClose={() => history.push("/articles")}
       loading={loading}
       title={title}
       desc={desc}
@@ -61,6 +59,8 @@ function CreateArticle() {
       category={category}
       setCategory={setCategory}
       categories={categories}
+      handleSubmit={handleSubmit}
+      handleClose={() => history.push("/articles")}
     />
   );
 }

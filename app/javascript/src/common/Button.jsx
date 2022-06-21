@@ -11,8 +11,8 @@ function Button({
 }) {
   return (
     <button
-      onClick={onClick}
       disabled={loading}
+      onClick={onClick}
       className={`bg-${bgColor} text-${color} outline-none flex items-center justify-center space-x-2 rounded-md px-4 py-2 font-medium ${classes}`}
     >
       <p className={`text-${color}`}>{title}</p>

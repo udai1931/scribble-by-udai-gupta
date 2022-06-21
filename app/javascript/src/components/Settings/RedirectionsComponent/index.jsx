@@ -37,12 +37,11 @@ function RedirectionsComponent() {
       await redirectionsApi.create({
         redirection: { from: newRedirection.from, to: newRedirection.to },
       });
-    } catch (err) {
-      logger.error(err);
-    } finally {
       setNewRedirection({});
       setNewRedirectionToggle(false);
       fetchRedirections();
+    } catch (err) {
+      logger.error(err);
     }
   };
 
@@ -52,24 +51,22 @@ function RedirectionsComponent() {
         id: editRedirectionToggle,
         payload: { from: editRedirection.from, to: editRedirection.to },
       });
-    } catch (err) {
-      logger.error(err);
-    } finally {
       setEditRedirection("");
       setEditRedirectionToggle("");
       fetchRedirections();
+    } catch (err) {
+      logger.error(err);
     }
   };
 
   const deleteRedirection = async () => {
     try {
       await redirectionsApi.destroy({ id: selectedRedirectionForDelete });
-    } catch (err) {
-      logger.error(err);
-    } finally {
       setShowAlert(false);
       setSelectedRedirectionForDelete("");
       fetchRedirections();
+    } catch (err) {
+      logger.error(err);
     }
   };
 
@@ -86,8 +83,8 @@ function RedirectionsComponent() {
   return (
     <div className="my-8 w-8/12">
       <Alert
-        size="sm"
         isOpen={showAlert}
+        size="sm"
         title="Delete Redirection"
         message="Are you sure you want to delete? This action is irreversible."
         onClose={() => setShowAlert(false)}

@@ -74,8 +74,6 @@ function EditArticle() {
   };
   return (
     <Form
-      handleSubmit={handleSubmit}
-      handleClose={() => history.push("/articles")}
       loading={loading}
       title={title}
       desc={desc}
@@ -84,6 +82,8 @@ function EditArticle() {
       setDesc={setDesc}
       setCategory={setCategory}
       categories={categories}
+      handleSubmit={handleSubmit}
+      handleClose={() => history.push("/articles")}
     />
   );
 }

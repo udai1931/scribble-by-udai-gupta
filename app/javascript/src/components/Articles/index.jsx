@@ -106,8 +106,8 @@ function Articles() {
       <Navbar />
       <div className="articles-container flex">
         <Alert
-          size="sm"
           isOpen={showAlert}
+          size="sm"
           title="Delete Article"
           message="Are you sure you want to delete? This action is irreversible."
           onClose={() => setShowAlert(false)}

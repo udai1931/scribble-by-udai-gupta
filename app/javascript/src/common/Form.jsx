@@ -28,13 +28,12 @@ function Form({
             onChange={e => setTitle(e.target.value)}
           />
           <Select
+            isSearchable
             placeholder="Select Category"
             className="ml-1 w-2/6"
             size="small"
             label="Category"
-            isSearchable
             defaultValue={category}
-            selected={category}
             onChange={obj => setCategory(obj)}
             options={categories?.map(category => ({
               value: category.id,
