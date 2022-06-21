@@ -109,7 +109,7 @@ function Articles() {
           isOpen={showAlert}
           size="sm"
           title="Delete Article"
-          message="Are you sure you want to delete? This action is irreversible."
+          message={`Are you sure you want to delete this article with the title "${selectedArticle?.title}" ? This action is irreversible.`}
           onClose={() => setShowAlert(false)}
           onSubmit={handleDeleteAction}
         />
