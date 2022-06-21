@@ -16,7 +16,7 @@ function RedirectionsComponent() {
   const [editRedirectionToggle, setEditRedirectionToggle] = useState("");
   const [editRedirection, setEditRedirection] = useState("");
   const [selectedRedirectionForDelete, setSelectedRedirectionForDelete] =
-    useState("");
+    useState({});
   const [showAlert, setShowAlert] = useState(false);
 
   const fetchRedirections = async () => {
@@ -61,9 +61,9 @@ function RedirectionsComponent() {
 
   const deleteRedirection = async () => {
     try {
-      await redirectionsApi.destroy({ id: selectedRedirectionForDelete });
+      await redirectionsApi.destroy({ id: selectedRedirectionForDelete?.id });
       setShowAlert(false);
-      setSelectedRedirectionForDelete("");
+      setSelectedRedirectionForDelete({});
       fetchRedirections();
     } catch (err) {
       logger.error(err);
@@ -76,7 +76,7 @@ function RedirectionsComponent() {
   };
 
   const handleDeleteClick = redirection => {
-    setSelectedRedirectionForDelete(redirection.id);
+    setSelectedRedirectionForDelete(redirection);
     setShowAlert(true);
   };
 
@@ -86,7 +86,7 @@ function RedirectionsComponent() {
         isOpen={showAlert}
         size="sm"
         title="Delete Redirection"
-        message="Are you sure you want to delete? This action is irreversible."
+        message={`Are you sure you this redirection with from value "${selectedRedirectionForDelete?.from}" want to delete? This action is irreversible.`}
         onClose={() => setShowAlert(false)}
         onSubmit={deleteRedirection}
       />

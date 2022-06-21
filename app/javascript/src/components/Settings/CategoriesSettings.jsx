@@ -15,8 +15,9 @@ function CategoriesSettings() {
   const [newCategory, setNewCategory] = useState("");
   const [editCategoryToggle, setEditCategoryToggle] = useState("");
   const [editCategory, setEditCategory] = useState("");
-  const [selectedCategoryForDelete, setSelectedCategoryForDelete] =
-    useState("");
+  const [selectedCategoryForDelete, setSelectedCategoryForDelete] = useState(
+    {}
+  );
   const [showAlert, setShowAlert] = useState(false);
 
   const fetchCategories = async () => {
@@ -59,9 +60,9 @@ function CategoriesSettings() {
 
   const deleteCategory = async () => {
     try {
-      await categoriesApi.destroy({ id: selectedCategoryForDelete });
+      await categoriesApi.destroy({ id: selectedCategoryForDelete.id });
       setShowAlert(false);
-      setSelectedCategoryForDelete("");
+      setSelectedCategoryForDelete({});
       fetchCategories();
     } catch (err) {
       logger.error(err);
@@ -74,7 +75,7 @@ function CategoriesSettings() {
   };
 
   const handleDeleteClick = category => {
-    setSelectedCategoryForDelete(category.id);
+    setSelectedCategoryForDelete(category);
     setShowAlert(true);
   };
 
@@ -108,7 +109,7 @@ function CategoriesSettings() {
         isOpen={showAlert}
         size="sm"
         title="Delete Category"
-        message="Are you sure you want to delete? This action is irreversible."
+        message={`Are you sure you want to delete this category with name "${selectedCategoryForDelete?.name}"? It will also deleted the ${selectedCategoryForDelete.count} articles belonging to this category. This action is irreversible.`}
         onClose={() => setShowAlert(false)}
         onSubmit={deleteCategory}
       />
