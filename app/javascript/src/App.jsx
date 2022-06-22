@@ -29,7 +29,7 @@ const App = () => {
   const [redirections, setRedirections] = useState([]);
   const [siteDetails, setSiteDetails] = useState({});
   const authToken = getFromLocalStorage("authToken");
-  const expiry = String(getFromLocalStorage("expiry") || "");
+  const expiry = String(getFromLocalStorage("expiry"));
   const currentTime = String(new Date().getTime());
   const isLoggedIn =
     siteDetails?.status === false ||

@@ -4,7 +4,6 @@ import { Typography, Input } from "neetoui";
 import { useHistory } from "react-router-dom";
 
 import authApi from "apis/auth";
-import { setAuthHeaders } from "apis/axios";
 import Button from "common/Button";
 import { setToLocalStorage } from "utils/storage";
 
@@ -21,11 +20,8 @@ function EnterPassword({ isLoggedIn, name }) {
   const handleClick = async () => {
     try {
       const res = await authApi.login({ login: { password: password } });
-      setToLocalStorage({
-        authToken: res.data.auth_token,
-        expiry: res.data.expiry,
-      });
-      setAuthHeaders();
+      setToLocalStorage("authToken", res.data.auth_token);
+      setToLocalStorage("expiry", res.data.expiry);
       window.location.href = "/articles";
     } catch (err) {
       logger.error(err);
