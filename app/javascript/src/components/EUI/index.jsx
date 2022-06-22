@@ -35,7 +35,7 @@ function EUI() {
       <Header />
       <div className="flex" style={{ minHeight: "calc(100vh - 4rem)" }}>
         <div className="sidebar-container w-1/5 border-r-2 p-4">
-          <Sidebar />
+          <Sidebar selectedArticleCategory={article?.category} />
         </div>
         <div className="component-container w-4/5 p-4">
           {loading ? (

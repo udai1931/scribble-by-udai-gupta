@@ -129,6 +129,7 @@ function Articles() {
             setSearch={setSearch}
             unselectedColumns={unselectedColumns}
             setUnselectedColumns={setUnselectedColumns}
+            categories={categories}
           />
           <Typography style="h3">
             {articlesCount?.Draft + articlesCount?.Published} Articles

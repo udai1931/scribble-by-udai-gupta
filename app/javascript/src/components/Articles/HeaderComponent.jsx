@@ -13,6 +13,7 @@ function HeaderComponent({
   setSearch,
   unselectedColumns,
   setUnselectedColumns,
+  categories,
 }) {
   const history = useHistory();
 
@@ -54,6 +55,8 @@ function HeaderComponent({
         ))}
       </Dropdown>
       <Button
+        disabled={categories.length === 0}
+        disabledMsg="Add a Category first"
         title="Add New Article"
         icon={<Plus />}
         onClick={() => history.push("/articles/create")}

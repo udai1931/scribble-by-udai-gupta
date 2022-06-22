@@ -32,6 +32,13 @@ function MenubarComponent({
     }
   };
 
+  const handleEscKeyDown = event => {
+    if (event.key === "Escape") {
+      setSearch("");
+      setIsSearchCollapsed(true);
+    }
+  };
+
   const filteredCategories = categories.filter(category =>
     category.name.toLowerCase().includes(search.toLowerCase())
   );
@@ -83,9 +90,11 @@ function MenubarComponent({
         placeholder="Search Category"
         value={search}
         onChange={e => setSearch(e.target.value)}
+        onKeyDown={handleEscKeyDown}
       />
       <Input
         collapse={!isCreateCollapsed}
+        setCollapse={setIsCreateCollapsed}
         value={newCategory}
         setValue={setNewCategory}
         handleSubmit={addNewCategory}

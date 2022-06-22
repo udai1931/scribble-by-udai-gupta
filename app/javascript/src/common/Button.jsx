@@ -1,7 +1,12 @@
 import React from "react";
 
+import classnames from "classnames";
+import { Tooltip } from "neetoui";
+
 function Button({
+  disabled = false,
   loading = false,
+  disabledMsg = "Something Went Wrong",
   title,
   bgColor = "indigo-600",
   color = "white",
@@ -10,14 +15,24 @@ function Button({
   classes = "",
 }) {
   return (
-    <button
-      disabled={loading}
-      onClick={onClick}
-      className={`bg-${bgColor} text-${color} outline-none flex items-center justify-center space-x-2 rounded-md px-4 py-2 font-medium ${classes}`}
+    <Tooltip
+      position="bottom"
+      content={disabledMsg}
+      hideAfter={3000}
+      disabled={!disabled}
     >
-      <p className={`text-${color}`}>{title}</p>
-      {icon !== "" && icon}
-    </button>
+      <button
+        disabled={loading}
+        onClick={!disabled ? onClick : () => {}}
+        className={classnames(
+          `bg-${bgColor} text-${color} outline-none flex items-center justify-center space-x-2 rounded-md px-4 py-2 font-medium ${classes}`,
+          { "cursor-not-allowed opacity-50": disabled }
+        )}
+      >
+        <p className={`text-${color}`}>{title}</p>
+        {icon !== "" && icon}
+      </button>
+    </Tooltip>
   );
 }
 

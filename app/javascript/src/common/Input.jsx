@@ -2,7 +2,16 @@ import React from "react";
 
 import { Check } from "neetoicons";
 
-function Input({ collapse, value, setValue, handleSubmit }) {
+function Input({ collapse, setCollapse, value, setValue, handleSubmit }) {
+  const handleEscAndEnterKeyDown = event => {
+    if (event.key === "Enter") {
+      handleSubmit();
+    } else if (event.key === "Escape") {
+      setValue("");
+      setCollapse(true);
+    }
+  };
+
   return (
     <>
       {collapse && (
@@ -13,6 +22,7 @@ function Input({ collapse, value, setValue, handleSubmit }) {
             placeholder="Enter Category"
             value={value}
             onChange={e => setValue(e.target.value)}
+            onKeyDown={handleEscAndEnterKeyDown}
           />
           <Check className="ml-auto cursor-pointer" onClick={handleSubmit} />
         </div>
