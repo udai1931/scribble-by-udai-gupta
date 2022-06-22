@@ -1,7 +1,7 @@
 import axios from "axios";
 import { Toastr } from "neetoui";
 
-import { setToLocalStorage } from "utils/storage";
+import { clearFromLocalStorage } from "utils/storage";
 
 axios.defaults.baseURL = "/";
 
@@ -34,7 +34,7 @@ const handleSuccessResponse = response => {
 
 const handleErrorResponse = axiosErrorObject => {
   if (axiosErrorObject.response?.status === 401) {
-    setToLocalStorage({ authToken: null, expiry: null });
+    clearFromLocalStorage();
     setTimeout(() => (window.location.href = "/login"), 2000);
   }
   Toastr.error(
