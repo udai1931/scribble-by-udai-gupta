@@ -7,11 +7,15 @@ import { useHistory, useLocation } from "react-router-dom";
 
 import categoriesApi from "../../apis/categories";
 
-function Sidebar() {
+function Sidebar({ selectedArticleCategory }) {
   const [categories, setCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("");
   const location = useLocation();
   const history = useHistory();
+
+  useEffect(() => {
+    setSelectedCategory(selectedArticleCategory);
+  }, [selectedArticleCategory]);
 
   const fetchCategories = async () => {
     try {
@@ -31,7 +35,6 @@ function Sidebar() {
   useEffect(() => {
     fetchCategories();
   }, []);
-
   return (
     <div className="p-4">
       {categories.map(category => (
@@ -51,7 +54,7 @@ function Sidebar() {
             {selectedCategory === category.name &&
               category.articles.map(article => (
                 <div
-                  key={article.title}
+                  key={article.slug}
                   className={classNames("cursor-pointer", {
                     "text-indigo-600":
                       article.slug === location.pathname.split("/")[2],
