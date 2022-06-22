@@ -12,13 +12,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_06_16_151650) do
+ActiveRecord::Schema.define(version: 2022_06_22_071720) do
 
   create_table "articles", force: :cascade do |t|
     t.string "title", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.string "description", null: false
+    t.string "body", null: false
     t.string "slug", null: false
     t.integer "author_user_id"
     t.string "state", default: "Draft", null: false

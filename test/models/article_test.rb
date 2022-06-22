@@ -10,7 +10,7 @@ class ArticleTest < ActiveSupport::TestCase
   end
 
   def test_values_of_created_at_and_updated_at
-    article = Article.new(title: "Test", description: "Desc", author_user: @user, category: @category)
+    article = Article.new(title: "Test", body: "Desc", author_user: @user, category: @category)
     assert_nil article.created_at
     assert_nil article.updated_at
     article.save!
@@ -69,10 +69,10 @@ class ArticleTest < ActiveSupport::TestCase
   def test_incremental_slug_generation_for_articles_with_duplicate_two_worded_titles
     first = Article.create!(
       title: "test article", author_user: @user, category: @category,
-      description: "test description")
+      body: "test body")
     second = Article.create!(
       title: "test article", author_user: @user, category: @category,
-      description: "test description")
+      body: "test body")
     assert_equal "test-article", first.slug
     assert_equal "test-article-2", second.slug
   end
@@ -80,7 +80,7 @@ class ArticleTest < ActiveSupport::TestCase
   def test_error_raised_for_duplicate_slug
     another_test_article = Article.create!(
       title: "another test", author_user: @user, category: @category,
-      description: "test description")
+      body: "test body")
     assert_raises ActiveRecord::RecordInvalid do
       another_test_article.update!(slug: @article.slug)
     end
@@ -98,7 +98,7 @@ class ArticleTest < ActiveSupport::TestCase
 
   def test_category_count_increases_on_article_save
     initial_count = @category.count
-    article = Article.new(title: "test", description: "test", author_user: @user, category: @category)
+    article = Article.new(title: "test", body: "test", author_user: @user, category: @category)
     article.save
     assert_equal @category.count, initial_count + 1
   end
@@ -111,7 +111,7 @@ class ArticleTest < ActiveSupport::TestCase
 
   def test_category_count_changes_on_article_category_update
     initial_count = @category.count
-    article = Article.new(title: "test", description: "test", author_user: @user, category: @category)
+    article = Article.new(title: "test", body: "test", author_user: @user, category: @category)
     article.save!
     assert_equal @category.count, initial_count + 1
     @new_category = create(:category)

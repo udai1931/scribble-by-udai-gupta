@@ -5,7 +5,7 @@ json.articles do
     json.extract! article,
       :id,
       :title,
-      :description,
+      :body,
       :slug,
       :state
     json.created_at article.created_at.strftime("%d %b %Y")

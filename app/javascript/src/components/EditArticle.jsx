@@ -10,7 +10,7 @@ function EditArticle() {
   const { slug } = useParams();
   const [loading, setLoading] = useState(false);
   const [title, setTitle] = useState("");
-  const [desc, setDesc] = useState("");
+  const [body, setBody] = useState("");
   const [category, setCategory] = useState("");
   const [categories, setCategories] = useState([]);
   const [article, setArticle] = useState(null);
@@ -43,7 +43,7 @@ function EditArticle() {
   useEffect(() => {
     if (article) {
       setTitle(article.title);
-      setDesc(article.description);
+      setBody(article.body);
       setCategory({ value: `${article.category_id}`, label: article.category });
     }
   }, [article]);
@@ -57,17 +57,17 @@ function EditArticle() {
         payload: {
           article: {
             title,
-            description: desc,
+            body: body,
             state,
             category_id: category.value,
           },
         },
       });
       setTitle("");
-      setDesc("");
+      setBody("");
       history.push("/articles");
     } catch (err) {
-      logger.erroror(err);
+      logger.error(err);
     } finally {
       setLoading(false);
     }
@@ -76,10 +76,10 @@ function EditArticle() {
     <Form
       loading={loading}
       title={title}
-      desc={desc}
+      body={body}
       category={category}
       setTitle={setTitle}
-      setDesc={setDesc}
+      setBody={setBody}
       setCategory={setCategory}
       categories={categories}
       handleSubmit={handleSubmit}
