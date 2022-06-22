@@ -54,7 +54,7 @@ function EUI() {
                 {article?.created_at}
               </div>
               <div>
-                <Typography style="body2">{article?.description}</Typography>
+                <Typography style="body2">{article?.body}</Typography>
               </div>
             </>
           )}

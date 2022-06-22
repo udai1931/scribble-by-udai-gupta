@@ -4,7 +4,7 @@ json.article do
   json.extract! @article,
     :id,
     :title,
-    :description,
+    :body,
     :state,
     :slug
   json.created_at @article.created_at.strftime("%d %b %Y")

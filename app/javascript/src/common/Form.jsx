@@ -8,9 +8,9 @@ function Form({
   handleSubmit,
   loading,
   title,
-  desc,
+  body,
   setTitle,
-  setDesc,
+  setBody,
   categories,
   category,
   setCategory,
@@ -46,8 +46,8 @@ function Form({
           placeholder="Enter body for the article"
           rows={14}
           className="w-100 m-2"
-          value={desc}
-          onChange={e => setDesc(e.target.value)}
+          value={body}
+          onChange={e => setBody(e.target.value)}
         />
         <div className="m-2 flex">
           <ActionDropdown

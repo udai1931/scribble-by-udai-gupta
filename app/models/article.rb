@@ -7,7 +7,7 @@ class Article < ApplicationRecord
   belongs_to :category
 
   validates :title, presence: true
-  validates :description, presence: true
+  validates :body, presence: true
   validates :slug, uniqueness: true
   validate :slug_not_changed
 

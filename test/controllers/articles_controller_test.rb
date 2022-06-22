@@ -43,7 +43,7 @@ class ArticlesControllerTest < ActionDispatch::IntegrationTest
     post articles_path,
       params: {
         article: {
-          title: "test", description: "description", author_user_id: @user.id,
+          title: "test", body: "body", author_user_id: @user.id,
           category_id: @category.id
         }
       },
@@ -57,7 +57,7 @@ class ArticlesControllerTest < ActionDispatch::IntegrationTest
     post articles_path,
       params: {
         article: {
-          title: "", description: "Test description", author_user_id: @user.id,
+          title: "", body: "Test body", author_user_id: @user.id,
           category_id: @category.id
         }
       },

@@ -9,7 +9,7 @@ import Form from "common/Form";
 function CreateArticle() {
   const [loading, setLoading] = useState(false);
   const [title, setTitle] = useState("");
-  const [desc, setDesc] = useState("");
+  const [body, setBody] = useState("");
   const [category, setCategory] = useState("");
   const [categories, setCategories] = useState([]);
 
@@ -35,13 +35,13 @@ function CreateArticle() {
       await articlesApi.create({
         article: {
           title,
-          description: desc,
+          body: body,
           state,
           category_id: category.value,
         },
       });
       setTitle("");
-      setDesc("");
+      setBody("");
       history.push("/articles");
     } catch (err) {
       logger.error(err);
@@ -53,9 +53,9 @@ function CreateArticle() {
     <Form
       loading={loading}
       title={title}
-      desc={desc}
+      body={body}
       setTitle={setTitle}
-      setDesc={setDesc}
+      setBody={setBody}
       category={category}
       setCategory={setCategory}
       categories={categories}
