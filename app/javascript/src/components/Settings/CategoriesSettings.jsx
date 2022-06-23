@@ -85,17 +85,17 @@ function CategoriesSettings() {
     const [reorderedItem] = items.splice(result.source.index, 1);
     items.splice(result.destination.index, 0, reorderedItem);
     setCategories(items);
-    updateIndexes(items);
+    updateCategoriesPosition(items);
   }
 
-  const updateIndexes = async items => {
+  const updateCategoriesPosition = async items => {
     try {
       for (let index = 0; index < items.length; index++) {
         const item = items[index];
         if (item.index === index + 1) return;
         await categoriesApi.update({
           id: item.id,
-          payload: { index: index + 1 },
+          payload: { position: index + 1 },
         });
       }
     } catch (err) {

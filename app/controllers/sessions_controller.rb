@@ -4,9 +4,8 @@ class SessionsController < ApplicationController
   skip_before_action :authenticate_user_using_x_auth_token
 
   def create
-    @details = SiteDetail.first
-    unless @details.authenticate(login_params[:password])
-      respond_with_error("Incorrect credentials", :unauthorized)
+    unless organization.authenticate(login_params[:password])
+      respond_with_error(t("session.incorrect_credentials"), :unauthorized)
     end
   end
 

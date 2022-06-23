@@ -2,6 +2,7 @@ import axios from "axios";
 import { Toastr } from "neetoui";
 
 import { clearFromLocalStorage } from "utils/storage";
+import { getFromLocalStorage } from "utils/storage";
 
 axios.defaults.baseURL = "/";
 
@@ -13,11 +14,11 @@ const setAuthHeaders = () => {
       .querySelector('[name="csrf-token"]')
       .getAttribute("content"),
   };
-  const token = localStorage.getItem("authToken");
-  const expiry = localStorage.getItem("expiry");
+  const token = getFromLocalStorage("authToken");
+  const expiry = getFromLocalStorage("expiry");
   if (token && expiry) {
-    axios.defaults.headers["X-Auth-Token"] = JSON.parse(token);
-    axios.defaults.headers["X-Auth-Expiry"] = `${expiry}`;
+    axios.defaults.headers["X-Auth-Token"] = token;
+    axios.defaults.headers["X-Auth-Expiry"] = expiry;
   }
 };
 

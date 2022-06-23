@@ -2,7 +2,7 @@ import React from "react";
 
 import { Delete, Edit } from "neetoicons";
 
-export const MENUBAR_ITEMS = ["All", "Draft", "Published"];
+export const MENUBAR_ITEMS = ["All", "draft", "published"];
 
 export const TABLE_COLUMNS_FOR_DROPDOWN = [
   {
@@ -46,8 +46,8 @@ export const TABLE_COLUMNS_FOR_TABLE = [
     sorter: (a, b) => a.title.localeCompare(b.title),
   },
   {
-    dataIndex: "author",
-    key: "author",
+    dataIndex: "user",
+    key: "user",
     title: "Author",
     width: "20%",
   },
@@ -65,9 +65,14 @@ export const TABLE_COLUMNS_FOR_TABLE = [
   },
   {
     dataIndex: "state",
-    key: "title",
+    key: "state",
     title: "Status",
     width: "20%",
+    render: state => (
+      <div className="flex space-x-2">
+        {state[0].toUpperCase() + state.substring(1)}
+      </div>
+    ),
   },
   {
     dataIndex: "actions",

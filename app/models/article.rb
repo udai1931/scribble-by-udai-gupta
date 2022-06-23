@@ -1,21 +1,20 @@
 # frozen_string_literal: true
 
 class Article < ApplicationRecord
-  enum state: { Draft: "Draft", Published: "Published" }
+  MAX_TITLE_LENGTH = 155
+  MAX_BODY_LENGTH = 1000
 
-  belongs_to :author_user, foreign_key: :author_user_id, class_name: "User"
+  enum state: { draft: "draft", published: "published" }
+
+  belongs_to :user
   belongs_to :category
 
-  validates :title, presence: true
-  validates :body, presence: true
+  validates :title, presence: true, length: { maximum: MAX_TITLE_LENGTH }
+  validates :body, presence: true, length: { maximum: MAX_BODY_LENGTH }
   validates :slug, uniqueness: true
   validate :slug_not_changed
 
-  before_validation :set_user
   before_create :set_slug
-  after_create :increment_count
-  after_destroy :decrement_count
-  before_update :update_count
 
   private
 
@@ -38,35 +37,7 @@ class Article < ApplicationRecord
 
     def slug_not_changed
       if slug_changed? && self.persisted?
-        errors.add(:slug, "Slug is not allowed to be changed")
-      end
-    end
-
-    def set_user
-      self.author_user_id = 1
-    end
-
-    def increment_count
-      category = self.category
-      category.count = category.count + 1
-      category.save!
-    end
-
-    def decrement_count
-      category = self.category
-      category.count = category.count - 1
-      category.save!
-    end
-
-    def update_count
-      old_category_id = self.category_id_was
-      new_category = self.category
-      if old_category_id != new_category.id
-        new_category.count = new_category.count + 1
-        new_category.save!
-        old_category = Category.find_by!(id: old_category_id)
-        old_category.count = old_category.count - 1
-        old_category.save!
+        errors.add(:slug, t("slug.change_not_allowed"))
       end
     end
 end

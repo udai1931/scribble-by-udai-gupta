@@ -35,3 +35,9 @@ en:
     incorrect_credentials: "Incorrect credentials, try again."
   successfully_created: "%{entity} was successfully created!"
   successfully_updated: "%{entity} was successfully updated!"
+  slug:
+    change_not_allowed: "is not allowed to be changed"
+  redirection:
+    same: "& To values are same"
+    cycle: "has a Cycle, Try with different values"
+  

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 
 import { Input, Typography, Checkbox } from "neetoui";
 
-import sitedetailsApi from "apis/sitedetails";
+import organizationApi from "apis/organization";
 import Button from "common/Button";
 
 function GeneralSettings() {
@@ -10,28 +10,32 @@ function GeneralSettings() {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
 
-  const updateDetails = async () => {
+  const updateOrganization = async () => {
     try {
-      await sitedetailsApi.update({
-        details: { name, password, status: showPassword },
+      await organizationApi.update({
+        organization: {
+          name: name,
+          password: password,
+          auth_status: showPassword,
+        },
       });
     } catch (err) {
       logger.error(err);
     }
   };
 
-  const fetchDetails = async () => {
+  const fetchOrganization = async () => {
     try {
-      const res = await sitedetailsApi.show();
-      setName(res.data.details.name);
-      setShowPassword(res.data.details.status);
+      const res = await organizationApi.show();
+      setName(res.data.organization.name);
+      setShowPassword(res.data.organization.auth_status);
     } catch (err) {
       logger.error(err);
     }
   };
 
   useEffect(() => {
-    fetchDetails();
+    fetchOrganization();
   }, []);
 
   return (
@@ -70,7 +74,7 @@ function GeneralSettings() {
         />
       )}
       <div className="mt-4 flex space-x-2">
-        <Button title="Save Changes" onClick={updateDetails} />
+        <Button title="Save Changes" onClick={updateOrganization} />
         <Button title="Cancel" color="black" bgColor="white" />
       </div>
     </div>

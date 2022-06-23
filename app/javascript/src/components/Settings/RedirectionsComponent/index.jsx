@@ -109,11 +109,11 @@ function RedirectionsComponent() {
               className="my-2 flex h-16 items-center justify-between bg-white px-4"
             >
               <div className="flex w-2/6 space-x-4 font-semibold">
-                <span className="text-gray-400">https://scribble.com</span>
+                <span className="text-gray-400">https://scribble.com/</span>
                 {redirection.from}
               </div>
               <div className="flex w-2/6 space-x-4 font-semibold">
-                <span className="text-gray-400">https://scribble.com</span>
+                <span className="text-gray-400">https://scribble.com/</span>
                 {redirection.to}
               </div>
               <div className="ml flex w-1/6 cursor-pointer justify-around space-x-2">

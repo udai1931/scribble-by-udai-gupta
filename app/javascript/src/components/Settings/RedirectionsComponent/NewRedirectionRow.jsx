@@ -8,14 +8,14 @@ function NewRedirectionRow({ value, setValue, handleSubmit }) {
     <div className="flex h-16 w-full flex-row items-center justify-between bg-white px-4">
       <div className="w-2/6">
         <Input
-          placeholder="https://scribble.com"
+          placeholder="https://scribble.com/"
           value={value?.from}
           onChange={e => setValue({ ...value, from: e.target.value })}
         />
       </div>
       <div className="w-2/6">
         <Input
-          placeholder="https://scribble.com"
+          placeholder="https://scribble.com/"
           value={value?.to}
           onChange={e => setValue({ ...value, to: e.target.value })}
         />

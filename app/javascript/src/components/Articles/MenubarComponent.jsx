@@ -21,7 +21,7 @@ function MenubarComponent({
   const [search, setSearch] = useState("");
   const [newCategory, setNewCategory] = useState("");
 
-  const addNewCategory = async () => {
+  const createCategory = async () => {
     try {
       const res = await categoriesApi.create({ name: newCategory });
       setCategories([...categories, res.data.category]);
@@ -48,10 +48,10 @@ function MenubarComponent({
       {MENUBAR_ITEMS.map(item => (
         <MenuBar.Block
           key={item}
-          label={item}
+          label={item[0].toUpperCase() + item.substring(1)}
           count={
             item === "All"
-              ? articlesCount?.Draft + articlesCount?.Published
+              ? articlesCount?.draft + articlesCount?.published
               : articlesCount[item]
           }
           active={item === selectedTab}
@@ -97,7 +97,7 @@ function MenubarComponent({
         setCollapse={setIsCreateCollapsed}
         value={newCategory}
         setValue={setNewCategory}
-        handleSubmit={addNewCategory}
+        handleSubmit={createCategory}
       />
 
       <div className="categories-container">

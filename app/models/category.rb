@@ -1,14 +1,16 @@
 # frozen_string_literal: true
 
 class Category < ApplicationRecord
-  has_many :articles, dependent: :destroy
-  validates :name, presence: true, uniqueness: true
+  MAX_NAME_LENGTH = 50
 
-  before_create :set_index
+  has_many :articles, dependent: :destroy
+  validates :name, presence: true, uniqueness: true, length: { maximum: MAX_NAME_LENGTH }
+
+  before_create :set_position
 
   private
 
-    def set_index
-      self.index = Category.count + 1
+    def set_position
+      self.position = Category.count + 1
     end
 end

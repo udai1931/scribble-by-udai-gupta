@@ -48,7 +48,7 @@ function EditArticle() {
     }
   }, [article]);
 
-  const handleSubmit = async (e, state = "Draft") => {
+  const handleSubmit = async (e, state = "draft") => {
     e.preventDefault();
     setLoading(true);
     try {
