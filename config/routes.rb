@@ -3,17 +3,16 @@
 Rails.application.routes.draw do
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
   constraints(lambda { |req| req.format == :json }) do
-    resources :articles, except: [:new, :edit], param: :slug do
-      get :count, on: :collection
-      post :state, on: :collection
-      post :category, on: :collection
+    resources :articles, except: %i[new edit], param: :slug do
+      post :index_by_state, on: :collection
     end
-    resources :categories, only: [:index, :create, :update, :destroy], param: :id do
-      get :articles, on: :collection
+    resources :categories, except: %i[show new edit] do
+      get :index_articles_by_category, on: :member
+      get :index_articles_by_categories, on: :collection
     end
-    resources :redirections, only: [:index, :create, :update, :destroy], param: :id
-    resource :sitedetails, only: [:update, :show]
-    resource :sessions, only: [:create]
+    resources :redirections, except: %i[show edit new]
+    resource :organization, only: %i[update show]
+    resource :session, only: %i[create]
   end
 
   root "home#index"

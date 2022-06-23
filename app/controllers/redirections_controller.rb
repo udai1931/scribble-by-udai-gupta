@@ -5,13 +5,13 @@ class RedirectionsController < ApplicationController
 
   before_action :load_redirection!, only: %i[update destroy]
 
+  def index
+    @redirections = Redirection.all
+  end
+
   def create
     redirection = Redirection.new(redirection_params)
     redirection.save!
-  end
-
-  def index
-    @redirections = Redirection.all
   end
 
   def update

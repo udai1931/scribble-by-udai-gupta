@@ -1,5 +1,5 @@
 # frozen_string_literal: true
 
-json.extract! @details,
+json.extract! @organization,
   :auth_token
-json.expiry Time.now.to_i + 10.minute.to_i
+json.expiry Time.current.to_i + 10.minute.to_i

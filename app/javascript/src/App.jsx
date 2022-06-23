@@ -10,8 +10,8 @@ import {
 import { ToastContainer } from "react-toastify";
 
 import { setAuthHeaders, registerIntercepts } from "apis/axios";
+import organizationApi from "apis/organization";
 import redirectionsApi from "apis/redirections";
-import sitedetailsApi from "apis/sitedetails";
 import { initializeLogger } from "common/logger";
 import PrivateRoute from "common/PrivateRoute";
 import Articles from "components/Articles";
@@ -27,12 +27,12 @@ import { getFromLocalStorage } from "./utils/storage";
 const App = () => {
   const [loading, setLoading] = useState(true);
   const [redirections, setRedirections] = useState([]);
-  const [siteDetails, setSiteDetails] = useState({});
+  const [organization, setOrganization] = useState({});
   const authToken = getFromLocalStorage("authToken");
   const expiry = String(getFromLocalStorage("expiry"));
   const currentTime = String(new Date().getTime());
   const isLoggedIn =
-    siteDetails?.status === false ||
+    organization?.auth_status === false ||
     (authToken && expiry && expiry.localeCompare(currentTime) === 1);
 
   const fetchRedirections = async () => {
@@ -46,8 +46,8 @@ const App = () => {
 
   const fetchNameAndStatus = async () => {
     try {
-      const res = await sitedetailsApi.show();
-      setSiteDetails(res.data.details);
+      const res = await organizationApi.show();
+      setOrganization(res.data.organization);
     } catch (err) {
       logger.error(err);
     } finally {
@@ -77,7 +77,7 @@ const App = () => {
       <Router>
         <Switch>
           <Route exact path="/login">
-            <EnterPassword isLoggedIn={isLoggedIn} name={siteDetails.name} />
+            <EnterPassword isLoggedIn={isLoggedIn} name={organization.name} />
           </Route>
           {redirections.map(({ from, to, id }) => (
             <Redirect key={id} exact from={from} to={to} />

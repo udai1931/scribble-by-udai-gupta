@@ -19,7 +19,7 @@ function Sidebar({ selectedArticleCategory }) {
 
   const fetchCategories = async () => {
     try {
-      const res = await categoriesApi.articles();
+      const res = await categoriesApi.listArticlesByCategories();
       setCategories([...res.data.categories]);
     } catch (err) {
       logger.err(err);

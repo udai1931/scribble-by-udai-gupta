@@ -36,23 +36,18 @@ def delete_all_records_from_all_tables
 end
 
 def create_sample_data!
-  create_user!
-  create_site_details!
+  create_organization_and_user!
 end
 
-def create_user!(options = {})
-  user_attributes = {
-    name: "Oliver Smith"
-  }
-  attributes = user_attributes.merge options
-  User.create! attributes
-end
-
-def create_site_details!(options = {})
-  site_details_attributes = {
+def create_organization_and_user!(options = {})
+  organization_attributes = {
     name: "Spinkart",
     password: "welcome",
   }
-  attributes = site_details_attributes.merge options
-  SiteDetail.create! attributes
+  user_attributes = {
+    name: "Oliver Smith"
+  }
+  attributes = organization_attributes.merge options
+  organization = Organization.create! attributes
+  organization.users.create! user_attributes
 end

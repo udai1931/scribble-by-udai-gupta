@@ -8,14 +8,19 @@ const update = ({ id, payload }) => axios.put(`/categories/${id}`, payload);
 
 const destroy = ({ id }) => axios.delete(`/categories/${id}`);
 
-const articles = () => axios.get("/categories/articles");
+const listArticlesByCategory = ({ id }) =>
+  axios.get(`/categories/${id}/index_articles_by_category`);
+
+const listArticlesByCategories = () =>
+  axios.get("/categories/index_articles_by_categories");
 
 const categoriesApi = {
   list,
   create,
   update,
   destroy,
-  articles,
+  listArticlesByCategory,
+  listArticlesByCategories,
 };
 
 export default categoriesApi;

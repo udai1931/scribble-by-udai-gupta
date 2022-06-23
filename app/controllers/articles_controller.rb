@@ -2,18 +2,20 @@
 
 class ArticlesController < ApplicationController
   before_action :load_article!, only: %i[show update destroy]
+  before_action :load_count, only: %i[index index_by_state]
 
   def index
     @articles = Article.all
   end
 
   def create
-    article = Article.new(article_params)
+    article = current_user.articles.new(article_params)
     article.save!
     respond_with_success(t("successfully_created", entity: "Article"))
   end
 
   def show
+    render
   end
 
   def update
@@ -25,17 +27,8 @@ class ArticlesController < ApplicationController
     @article.destroy!
   end
 
-  def count
-    @draft = Article.Draft.length
-    @published = Article.Published.length
-  end
-
-  def state
-    @articles = Article.where(state: params[:state])
-  end
-
-  def category
-    @articles = Article.where(category_id: params[:category_id])
+  def index_by_state
+    @articles = Article.where(state: article_params[:state])
   end
 
   private
@@ -46,5 +39,10 @@ class ArticlesController < ApplicationController
 
     def load_article!
       @article = Article.find_by!(slug: params[:slug])
+    end
+
+    def load_count
+      @draft = Article.draft.length
+      @published = Article.published.length
     end
 end

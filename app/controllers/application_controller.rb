@@ -5,9 +5,15 @@ class ApplicationController < ActionController::Base
   include ApiRescuable
   include Authenticable
 
-  private
+  def _is_authentication_up
+    @_is_authentication_up ||= true
+  end
 
-    def auth_active
-      @@auth_active
-    end
+  def organization
+    @organization = Organization.first
+  end
+
+  def current_user
+    @current_user = organization.users.first
+  end
 end

@@ -29,29 +29,22 @@ function Articles() {
 
   useEffect(() => {
     fetchArticles();
-    fetchArticlesCount();
     fetchCategories();
   }, []);
 
   const fetchArticles = async () => {
-    let res;
-    if (selectedTab === "All") {
-      res = await articlesApi.list();
-    } else if (selectedTab === "Draft" || selectedTab === "Published") {
-      res = await articlesApi.listByState({ state: selectedTab });
-    } else {
-      res = await articlesApi.listByCategory({ category_id: selectedTab });
-    }
     try {
+      let res;
+      if (selectedTab === "All") {
+        res = await articlesApi.list();
+      } else if (selectedTab === "draft" || selectedTab === "published") {
+        res = await articlesApi.listByState({
+          article: { state: selectedTab },
+        });
+      } else {
+        res = await categoriesApi.listArticlesByCategory({ id: selectedTab });
+      }
       setArticles([...res.data.articles]);
-    } catch (err) {
-      logger.error(err);
-    }
-  };
-
-  const fetchArticlesCount = async () => {
-    try {
-      const res = await articlesApi.count();
       setArticlesCount({ ...res.data.count });
     } catch (err) {
       logger.error(err);
@@ -83,7 +76,6 @@ function Articles() {
       logger.error(err);
     } finally {
       setShowAlert(false);
-      fetchArticlesCount();
       fetchCategories();
       fetchArticles();
     }
@@ -132,7 +124,7 @@ function Articles() {
             categories={categories}
           />
           <Typography style="h3">
-            {articlesCount?.Draft + articlesCount?.Published} Articles
+            {articlesCount?.draft + articlesCount?.published} Articles
           </Typography>
           <NeetoUITable
             allowRowClick

@@ -17,7 +17,7 @@ function EnterPassword({ isLoggedIn, name }) {
     history.push("/articles");
   }
 
-  const handleClick = async () => {
+  const handleSubmit = async () => {
     try {
       const res = await authApi.login({ login: { password: password } });
       setToLocalStorage("authToken", res.data.auth_token);
@@ -46,7 +46,7 @@ function EnterPassword({ isLoggedIn, name }) {
           />
         </div>
         <div className="w-24">
-          <Button title="Continue" onClick={handleClick} />
+          <Button title="Continue" onClick={handleSubmit} />
         </div>
       </div>
     </div>
