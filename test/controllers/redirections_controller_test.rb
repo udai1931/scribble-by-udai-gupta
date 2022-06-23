@@ -5,8 +5,8 @@ require "test_helper"
 class RedirectionsControllerTest < ActionDispatch::IntegrationTest
   def setup
     @redirection = create(:redirection)
-    @details = create(:site_detail)
-    @headers = headers(@details)
+    @organization = create(:organization)
+    @headers = headers(@organization)
   end
 
   def test_should_list_all_redirections_for_valid_user
@@ -30,7 +30,7 @@ class RedirectionsControllerTest < ActionDispatch::IntegrationTest
       headers: @headers
     assert_response :unprocessable_entity
     response_json = response.parsed_body
-    assert_equal response_json["error"], "From can't be blank"
+    assert_equal response_json["error"], t("blank", entity: "From")
   end
 
   def test_shouldnt_create_redirection_without_to
@@ -38,7 +38,7 @@ class RedirectionsControllerTest < ActionDispatch::IntegrationTest
       headers: @headers
     assert_response :unprocessable_entity
     response_json = response.parsed_body
-    assert_equal response_json["error"], "To can't be blank"
+    assert_equal response_json["error"], t("blank", entity: "To")
   end
 
   def test_shouldnt_create_redirection_with_duplicate_from
@@ -46,7 +46,7 @@ class RedirectionsControllerTest < ActionDispatch::IntegrationTest
       headers: @headers
     assert_response :unprocessable_entity
     response_json = response.parsed_body
-    assert_equal response_json["error"], "From has already been taken"
+    assert_equal response_json["error"], t("taken", entity: "From")
   end
 
   def test_should_destroy_redirection

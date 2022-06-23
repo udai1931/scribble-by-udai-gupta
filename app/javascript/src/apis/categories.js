@@ -9,10 +9,10 @@ const update = ({ id, payload }) => axios.put(`/categories/${id}`, payload);
 const destroy = ({ id }) => axios.delete(`/categories/${id}`);
 
 const listArticlesByCategory = ({ id }) =>
-  axios.get(`/categories/${id}/index_articles_by_category`);
+  axios.get(`/categories/${id}/list_articles`);
 
 const listArticlesByCategories = () =>
-  axios.get("/categories/index_articles_by_categories");
+  axios.get("/categories/list_articles_in_order");
 
 const categoriesApi = {
   list,

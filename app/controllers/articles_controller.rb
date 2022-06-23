@@ -2,7 +2,7 @@
 
 class ArticlesController < ApplicationController
   before_action :load_article!, only: %i[show update destroy]
-  before_action :load_count, only: %i[index index_by_state]
+  before_action :load_count, only: %i[index list_by_state]
 
   def index
     @articles = Article.all
@@ -27,7 +27,7 @@ class ArticlesController < ApplicationController
     @article.destroy!
   end
 
-  def index_by_state
+  def list_by_state
     @articles = Article.where(state: article_params[:state])
   end
 

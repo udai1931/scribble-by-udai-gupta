@@ -10,7 +10,7 @@ const update = ({ slug, payload }) => axios.put(`/articles/${slug}`, payload);
 
 const destroy = slug => axios.delete(`/articles/${slug}`);
 
-const listByState = payload => axios.post(`/articles/index_by_state`, payload);
+const listByState = payload => axios.post(`/articles/list_by_state`, payload);
 
 const articlesApi = {
   list,

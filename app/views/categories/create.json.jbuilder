@@ -1,3 +1,5 @@
 # frozen_string_literal: true
 
-json.category json.partial! "categories/category", category: @category
+json.category do
+  json.partial! "categories/category", category: @category
+end

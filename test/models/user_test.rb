@@ -10,7 +10,7 @@ class UserTest < ActiveSupport::TestCase
   def test_user_should_not_be_valid_and_saved_without_name
     @user.name = ""
     assert_not @user.valid?
-    assert_includes @user.errors.full_messages, "Name can't be blank"
+    assert_includes @user.errors.full_messages, t("blank", entity: "Name")
   end
 
   def test_name_should_be_of_valid_length

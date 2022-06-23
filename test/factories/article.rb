@@ -2,7 +2,7 @@
 
 FactoryBot.define do
   factory :article do
-    association :author_user, factory: :user
+    user
     category
     title { Faker::Lorem.sentence[0...49] }
     body { Faker::Lorem.sentence[0...249] }

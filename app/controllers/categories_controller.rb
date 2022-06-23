@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 class CategoriesController < ApplicationController
-  before_action :load_category!, only: %i[update destroy index_articles_by_category]
-  before_action :reorder_categories, only: %i[index index_articles_by_categories]
+  before_action :load_category!, only: %i[update destroy list_articles]
+  before_action :reorder_categories, only: %i[index list_articles_in_order]
 
   def index
     render
@@ -21,11 +21,11 @@ class CategoriesController < ApplicationController
     @category.destroy!
   end
 
-  def index_articles_by_category
+  def list_articles
     render
   end
 
-  def index_articles_by_categories
+  def list_articles_in_order
     render
   end
 

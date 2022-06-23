@@ -32,7 +32,7 @@ const App = () => {
   const expiry = String(getFromLocalStorage("expiry"));
   const currentTime = String(new Date().getTime());
   const isLoggedIn =
-    organization?.auth_status === false ||
+    organization?.is_password_protected === false ||
     (authToken && expiry && expiry.localeCompare(currentTime) === 1);
 
   const fetchRedirections = async () => {

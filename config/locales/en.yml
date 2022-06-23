@@ -40,4 +40,6 @@ en:
   redirection:
     same: "& To values are same"
     cycle: "has a Cycle, Try with different values"
-  
+  must_exist: "%{entity} must exist"
+  blank: "%{entity} can't be blank"
+  taken: "%{entity} has already been taken"

@@ -5,10 +5,6 @@ class ApplicationController < ActionController::Base
   include ApiRescuable
   include Authenticable
 
-  def _is_authentication_up
-    @_is_authentication_up ||= true
-  end
-
   def organization
     @organization = Organization.first
   end
