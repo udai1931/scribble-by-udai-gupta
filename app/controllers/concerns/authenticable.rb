@@ -4,7 +4,7 @@ module Authenticable
   extend ActiveSupport::Concern
 
   included do
-    before_action :authenticate_user_using_x_auth_token, if: :_is_authentication_up
+    before_action :authenticate_user_using_x_auth_token, if: -> { organization.is_password_protected }
   end
 
   private

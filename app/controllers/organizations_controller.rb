@@ -5,19 +5,16 @@ class OrganizationsController < ApplicationController
 
   def show
     @organization = organization
-    @_is_authentication_up = _is_authentication_up
   end
 
   def update
-    organization.update!({ name: organization_params["name"], password: organization_params["password"] })
-    _is_authentication_up = organization_params["auth_status"]
-    # @_is_authentication_up = organization_params["auth_status"]
+    organization.update!(organization_params)
     respond_with_success(t("successfully_updated", entity: "Organization"))
   end
 
   private
 
     def organization_params
-      params.require(:organization).permit(:name, :password, :auth_status)
+      params.require(:organization).permit(:name, :password, :is_password_protected)
     end
 end

@@ -5,8 +5,8 @@ require "test_helper"
 class CategoriesControllerTest < ActionDispatch::IntegrationTest
   def setup
     @category = create(:category)
-    @details = create(:site_detail)
-    @headers = headers(@details)
+    @organization = create(:organization)
+    @headers = headers(@organization)
   end
 
   def test_should_list_all_categories_for_valid_user
@@ -19,7 +19,7 @@ class CategoriesControllerTest < ActionDispatch::IntegrationTest
   end
 
   def test_should_list_all_articles_category_wise_for_a_valid_user
-    get categories_path + "/articles", headers: @headers
+    get categories_path + "/list_articles_in_order", headers: @headers
     assert_response :success
     response_body = response.parsed_body
     all_categories = response_body["categories"]
@@ -36,7 +36,7 @@ class CategoriesControllerTest < ActionDispatch::IntegrationTest
       headers: @headers
     assert_response :unprocessable_entity
     response_json = response.parsed_body
-    assert_equal response_json["error"], "Name can't be blank"
+    assert_equal response_json["error"], t("blank", entity: "Name")
   end
 
   def test_should_destroy_article

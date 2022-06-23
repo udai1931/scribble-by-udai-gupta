@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 
+import { Check, Close } from "neetoicons";
 import { Input, Typography, Checkbox } from "neetoui";
 
 import organizationApi from "apis/organization";
@@ -9,14 +10,14 @@ function GeneralSettings() {
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-
+  const regex = /^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$/;
   const updateOrganization = async () => {
     try {
       await organizationApi.update({
         organization: {
           name: name,
           password: password,
-          auth_status: showPassword,
+          is_password_protected: showPassword,
         },
       });
     } catch (err) {
@@ -28,7 +29,7 @@ function GeneralSettings() {
     try {
       const res = await organizationApi.show();
       setName(res.data.organization.name);
-      setShowPassword(res.data.organization.auth_status);
+      setShowPassword(res.data.organization.is_password_protected);
     } catch (err) {
       logger.error(err);
     }
@@ -37,6 +38,9 @@ function GeneralSettings() {
   useEffect(() => {
     fetchOrganization();
   }, []);
+
+  const validation1 = password?.length > 5;
+  const validation2 = regex.test(password);
 
   return (
     <div className="w-100 my-8">
@@ -64,17 +68,40 @@ function GeneralSettings() {
         />
       </div>
       {showPassword && (
-        <Input
-          label="Password"
-          placeholder="Password"
-          type="password"
-          className="my-4"
-          value={password}
-          onChange={e => setPassword(e.target.value)}
-        />
+        <>
+          <Input
+            label="Password"
+            placeholder="Password"
+            type="password"
+            className="my-4"
+            value={password}
+            onChange={e => setPassword(e.target.value)}
+          />
+          <div className="my-2 flex items-center space-x-4">
+            {validation1 ? (
+              <Check className="text-green-600" />
+            ) : (
+              <Close className="text-red-600" />
+            )}{" "}
+            Have at least 6 characters
+          </div>
+          <div className="my-2 flex items-center space-x-12">
+            {validation2 ? (
+              <Check className="text-green-600" />
+            ) : (
+              <Close className="text-red-600" />
+            )}{" "}
+            Include atleast one letter and one number
+          </div>
+        </>
       )}
       <div className="mt-4 flex space-x-2">
-        <Button title="Save Changes" onClick={updateOrganization} />
+        <Button
+          title="Save Changes"
+          onClick={updateOrganization}
+          disabled={showPassword && !(validation1 && validation2)}
+          disabledMsg="Please follow the above validations"
+        />
         <Button title="Cancel" color="black" bgColor="white" />
       </div>
     </div>
