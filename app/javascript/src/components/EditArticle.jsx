@@ -78,6 +78,8 @@ function EditArticle() {
       title={title}
       body={body}
       category={category}
+      state={article?.state}
+      slug={article?.slug}
       setTitle={setTitle}
       setBody={setBody}
       setCategory={setCategory}
