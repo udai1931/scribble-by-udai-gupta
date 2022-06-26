@@ -6,6 +6,7 @@ import { MenuBar } from "neetoui/layouts";
 
 import categoriesApi from "apis/categories";
 import Input from "common/Input.jsx";
+import { startCase } from "utils/changeCase";
 
 import { MENUBAR_ITEMS } from "./constants";
 
@@ -48,7 +49,7 @@ function MenubarComponent({
       {MENUBAR_ITEMS.map(item => (
         <MenuBar.Block
           key={item}
-          label={item[0].toUpperCase() + item.substring(1)}
+          label={startCase(item)}
           count={
             item === "All"
               ? articlesCount?.draft + articlesCount?.published

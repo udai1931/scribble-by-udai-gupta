@@ -2,6 +2,8 @@ import React from "react";
 
 import { Delete, Edit } from "neetoicons";
 
+import { startCase } from "utils/changeCase";
+
 export const MENUBAR_ITEMS = ["All", "draft", "published"];
 
 export const TABLE_COLUMNS_FOR_DROPDOWN = [
@@ -69,9 +71,7 @@ export const TABLE_COLUMNS_FOR_TABLE = [
     title: "Status",
     width: "20%",
     render: state => (
-      <div className="flex space-x-2">
-        {state[0].toUpperCase() + state.substring(1)}
-      </div>
+      <div className="flex space-x-2">{state && startCase(state)}</div>
     ),
   },
   {

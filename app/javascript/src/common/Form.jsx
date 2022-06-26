@@ -10,6 +10,8 @@ function Form({
   loading,
   title,
   body,
+  state,
+  slug,
   setTitle,
   setBody,
   categories,
@@ -19,7 +21,7 @@ function Form({
 }) {
   return (
     <>
-      <Navbar />
+      <Navbar state={state} slug={slug} />
       <div className="mt-32 flex justify-center">
         <div className="form-wrapper w-5/12 p-2 text-gray-600">
           <div className="m-2 mb-4 flex justify-between">
