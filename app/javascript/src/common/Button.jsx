@@ -25,7 +25,7 @@ function Button({
         disabled={loading}
         onClick={!disabled ? onClick : () => {}}
         className={classnames(
-          `bg-${bgColor} text-${color} outline-none flex items-center justify-center space-x-2 rounded-md px-4 py-2 font-medium ${classes}`,
+          `bg-${bgColor} text-${color} outline-none flex items-center justify-center space-x-2 rounded-sm px-4 py-2 font-medium ${classes}`,
           { "cursor-not-allowed opacity-50": disabled }
         )}
       >
