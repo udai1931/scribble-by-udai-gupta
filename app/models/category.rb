@@ -4,6 +4,7 @@ class Category < ApplicationRecord
   MAX_NAME_LENGTH = 50
 
   has_many :articles, dependent: :destroy
+  has_many :versions, dependent: :destroy
   validates :name, presence: true, uniqueness: true, length: { maximum: MAX_NAME_LENGTH }
 
   before_create :set_position

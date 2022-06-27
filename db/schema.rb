@@ -12,7 +12,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_06_23_103845) do
+ActiveRecord::Schema.define(version: 2022_06_27_083554) do
+
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
 
   create_table "articles", force: :cascade do |t|
     t.string "title", null: false
@@ -56,7 +59,20 @@ ActiveRecord::Schema.define(version: 2022_06_23_103845) do
     t.integer "organization_id"
   end
 
+  create_table "versions", force: :cascade do |t|
+    t.string "title", null: false
+    t.string "body", null: false
+    t.string "state", null: false
+    t.integer "category_id", null: false
+    t.string "tag", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.integer "article_id", null: false
+  end
+
   add_foreign_key "articles", "categories"
   add_foreign_key "articles", "users"
   add_foreign_key "users", "organizations"
+  add_foreign_key "versions", "articles"
+  add_foreign_key "versions", "categories"
 end
