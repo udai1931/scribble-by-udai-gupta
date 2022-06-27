@@ -8,6 +8,7 @@ class Article < ApplicationRecord
 
   belongs_to :user
   belongs_to :category
+  has_many :versions, dependent: :destroy
 
   validates :title, presence: true, length: { maximum: MAX_TITLE_LENGTH }
   validates :body, presence: true, length: { maximum: MAX_BODY_LENGTH }
@@ -15,6 +16,7 @@ class Article < ApplicationRecord
   validate :slug_not_changed
 
   before_create :set_slug
+  after_create :create_first_version
 
   private
 
@@ -39,5 +41,14 @@ class Article < ApplicationRecord
       if slug_changed? && self.persisted?
         errors.add(:slug, t("slug.change_not_allowed"))
       end
+    end
+
+    def create_first_version
+      tag = state
+      if state == "draft"
+        tag = "drafted"
+      end
+      version = Version.new(title: title, category_id: category_id, body: body, state: state, tag: tag, article_id: id)
+      version.save!
     end
 end

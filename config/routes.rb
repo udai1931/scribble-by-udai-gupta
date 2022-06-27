@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   constraints(lambda { |req| req.format == :json }) do
     resources :articles, except: %i[new edit], param: :slug do
       post :list_by_state, on: :collection
+      get :versions, on: :member
     end
     resources :categories, except: %i[show new edit] do
       get :list_articles, on: :member
