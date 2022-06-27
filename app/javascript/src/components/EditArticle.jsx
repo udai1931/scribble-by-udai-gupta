@@ -5,6 +5,9 @@ import { useHistory, useParams } from "react-router-dom";
 import articlesApi from "apis/articles";
 import categoriesApi from "apis/categories";
 import Form from "common/Form";
+import Navbar from "common/Navbar";
+import RestoreModal from "common/RestoreModal";
+import VersionHistory from "common/VersionHistory";
 
 function EditArticle() {
   const { slug } = useParams();
@@ -14,6 +17,7 @@ function EditArticle() {
   const [category, setCategory] = useState("");
   const [categories, setCategories] = useState([]);
   const [article, setArticle] = useState(null);
+  const [showRestoreModal, setShowRestoreModal] = useState(false);
 
   const history = useHistory();
 
@@ -73,20 +77,32 @@ function EditArticle() {
     }
   };
   return (
-    <Form
-      loading={loading}
-      title={title}
-      body={body}
-      category={category}
-      state={article?.state}
-      slug={article?.slug}
-      setTitle={setTitle}
-      setBody={setBody}
-      setCategory={setCategory}
-      categories={categories}
-      handleSubmit={handleSubmit}
-      handleClose={() => history.push("/articles")}
-    />
+    <div className="flex h-full w-full">
+      <RestoreModal
+        showRestoreModal={showRestoreModal}
+        setShowRestoreModal={setShowRestoreModal}
+      />
+      <Navbar state={article?.state} slug={article?.slug} />
+      <div className="w-9/12">
+        <Form
+          loading={loading}
+          title={title}
+          body={body}
+          category={category}
+          state={article?.state}
+          slug={article?.slug}
+          setTitle={setTitle}
+          setBody={setBody}
+          setCategory={setCategory}
+          categories={categories}
+          handleSubmit={handleSubmit}
+          handleClose={() => history.push("/articles")}
+        />
+      </div>
+      <div className="w-3/12">
+        <VersionHistory setShowRestoreModal={setShowRestoreModal} />
+      </div>
+    </div>
   );
 }
 

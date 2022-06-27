@@ -3,15 +3,12 @@ import React from "react";
 import { Input, Select, Textarea, ActionDropdown } from "neetoui";
 
 import Button from "common/Button";
-import Navbar from "common/Navbar";
 
 function Form({
   handleSubmit,
   loading,
   title,
   body,
-  state,
-  slug,
   setTitle,
   setBody,
   categories,
@@ -20,63 +17,58 @@ function Form({
   handleClose,
 }) {
   return (
-    <>
-      <Navbar state={state} slug={slug} />
-      <div className="mt-32 flex justify-center">
-        <div className="form-wrapper w-5/12 p-2 text-gray-600">
-          <div className="m-2 mb-4 flex justify-between">
-            <Input
-              label="Article Title"
-              placeholder="Enter Title"
-              className="mr-1 w-3/6 text-xs font-bold"
-              value={title}
-              onChange={e => setTitle(e.target.value)}
-            />
-            <Select
-              isSearchable
-              placeholder="Select Category"
-              className="ml-1 w-2/6"
-              size="small"
-              label="Category"
-              defaultValue={category}
-              onChange={obj => setCategory(obj)}
-              options={categories?.map(category => ({
-                value: category.id,
-                label: category.name,
-              }))}
-            />
-          </div>
-          <Textarea
-            label="Article Body"
-            placeholder="Enter body for the article"
-            rows={14}
-            className="w-100 m-2"
-            value={body}
-            onChange={e => setBody(e.target.value)}
+    <div className="mt-16 flex justify-center py-6">
+      <div className="form-wrapper w-7/12 p-2 text-gray-600">
+        <div className="m-2 mb-4 flex justify-between">
+          <Input
+            label="Article Title"
+            placeholder="Enter Title"
+            className="mr-1 w-3/6 text-xs font-bold"
+            value={title}
+            onChange={e => setTitle(e.target.value)}
           />
-          <div className="m-2 flex">
-            <ActionDropdown
-              disabled={loading}
-              label="Save Draft"
-              onClick={handleSubmit}
-              size="large"
-              style="bg-indigo-600"
-              className="rounded-md bg-indigo-600 text-white"
-            >
-              <li onClick={e => handleSubmit(e, "published")}>
-                Publish Article
-              </li>
-            </ActionDropdown>
-            <Button
-              title="Cancel"
-              bgColor="white"
-              color="black"
-              onClick={handleClose}
-            />
-          </div>
+          <Select
+            isSearchable
+            placeholder="Select Category"
+            className="ml-1 w-2/6"
+            size="small"
+            label="Category"
+            defaultValue={category}
+            onChange={obj => setCategory(obj)}
+            options={categories?.map(category => ({
+              value: category.id,
+              label: category.name,
+            }))}
+          />
+        </div>
+        <Textarea
+          label="Article Body"
+          placeholder="Enter body for the article"
+          rows={14}
+          className="w-100 m-2"
+          value={body}
+          onChange={e => setBody(e.target.value)}
+        />
+        <div className="m-2 flex">
+          <ActionDropdown
+            disabled={loading}
+            label="Save Draft"
+            onClick={handleSubmit}
+            size="large"
+            style="bg-indigo-600"
+            className="rounded-md bg-indigo-600 text-white"
+          >
+            <li onClick={e => handleSubmit(e, "published")}>Publish Article</li>
+          </ActionDropdown>
+          <Button
+            title="Cancel"
+            bgColor="white"
+            color="black"
+            onClick={handleClose}
+          />
         </div>
       </div>
-    </>
+    </div>
   );
 }
 

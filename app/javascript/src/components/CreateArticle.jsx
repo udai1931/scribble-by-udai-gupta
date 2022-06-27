@@ -5,6 +5,7 @@ import { useHistory } from "react-router-dom";
 import articlesApi from "apis/articles";
 import categoriesApi from "apis/categories";
 import Form from "common/Form";
+import Navbar from "common/Navbar";
 
 function CreateArticle() {
   const [loading, setLoading] = useState(false);
@@ -50,18 +51,21 @@ function CreateArticle() {
     }
   };
   return (
-    <Form
-      loading={loading}
-      title={title}
-      body={body}
-      setTitle={setTitle}
-      setBody={setBody}
-      category={category}
-      setCategory={setCategory}
-      categories={categories}
-      handleSubmit={handleSubmit}
-      handleClose={() => history.push("/articles")}
-    />
+    <>
+      <Navbar />
+      <Form
+        loading={loading}
+        title={title}
+        body={body}
+        setTitle={setTitle}
+        setBody={setBody}
+        category={category}
+        setCategory={setCategory}
+        categories={categories}
+        handleSubmit={handleSubmit}
+        handleClose={() => history.push("/articles")}
+      />
+    </>
   );
 }
 
