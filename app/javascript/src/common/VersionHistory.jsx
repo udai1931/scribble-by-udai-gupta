@@ -2,7 +2,14 @@ import React from "react";
 
 import { Typography } from "neetoui";
 
-function VersionHistory({ setShowRestoreModal }) {
+import { startCase } from "utils/changeCase";
+
+function VersionHistory({ setShowRestoreModal, versions, setSelectedVersion }) {
+  const handleVersionClick = version => {
+    setSelectedVersion(version);
+    setShowRestoreModal(true);
+  };
+
   return (
     <div className="version-history-container mt-16 space-y-2 overflow-auto border-l-2 py-6 px-4">
       <Typography style="h3">Version History</Typography>
@@ -10,17 +17,20 @@ function VersionHistory({ setShowRestoreModal }) {
         Version history of Setting up an account in Scribble
       </Typography>
       <div className="space-y-2">
-        <div
-          className="flex cursor-pointer items-center space-x-6"
-          onClick={() => setShowRestoreModal(true)}
-        >
-          <Typography style="h4" className="text-gray-400">
-            10:00AM, 12/20/2021
-          </Typography>
-          <Typography style="h4" className="text-indigo-600 ">
-            Article Drafted
-          </Typography>
-        </div>
+        {versions.map(version => (
+          <div
+            key={version.id}
+            className="flex cursor-pointer items-center space-x-5"
+            onClick={() => handleVersionClick(version)}
+          >
+            <Typography style="h4" className="text-gray-400">
+              {version.created_at}
+            </Typography>
+            <Typography style="h4" className="text-indigo-600 ">
+              Article {startCase(version.tag)}
+            </Typography>
+          </div>
+        ))}
       </div>
     </div>
   );

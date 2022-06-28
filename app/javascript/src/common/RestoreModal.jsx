@@ -4,10 +4,19 @@ import { Modal, Typography, Input, Select } from "neetoui";
 
 import Button from "common/Button";
 
-function RestoreModal({ showRestoreModal, setShowRestoreModal }) {
+function RestoreModal({
+  showRestoreModal,
+  setShowRestoreModal,
+  selectedVersion,
+  handleSubmit,
+}) {
   return (
     <div>
-      <Modal isOpen={showRestoreModal} size="md" closeButton={false}>
+      <Modal
+        isOpen={showRestoreModal}
+        size="md"
+        onClose={() => setShowRestoreModal(false)}
+      >
         <Modal.Header>
           <Typography style="h2" id="dialog1Title">
             Version History
@@ -24,7 +33,7 @@ function RestoreModal({ showRestoreModal, setShowRestoreModal }) {
               label="Article Title"
               placeholder="Enter Title"
               className="mr-1 w-3/6 text-xs font-bold"
-              value="Old Title"
+              value={selectedVersion?.title}
             />
             <Select
               isDisabled
@@ -33,7 +42,7 @@ function RestoreModal({ showRestoreModal, setShowRestoreModal }) {
               className="ml-1 w-2/6"
               size="small"
               label="Category"
-              value={{ label: "Old Category" }}
+              value={selectedVersion?.category}
             />
           </div>
           <div className="m-2 flex h-40 justify-between">
@@ -41,12 +50,22 @@ function RestoreModal({ showRestoreModal, setShowRestoreModal }) {
               readOnly
               rows="13"
               className="border version-history-textarea w-full cursor-not-allowed rounded-sm border-gray-400 bg-disabled-gray p-2"
-              value={"axascswdvefjvbewriv csfiuwb cwoiubwe dwoueb"}
+              value={selectedVersion?.body}
             />
           </div>
         </Modal.Body>
         <Modal.Footer className=" flex space-x-2">
-          <Button title="Restore Version" />
+          <Button
+            title="Restore Version"
+            onClick={e =>
+              handleSubmit(
+                e,
+                selectedVersion?.state,
+                "restored",
+                selectedVersion
+              )
+            }
+          />
           <Button
             title="Cancel"
             color="black"

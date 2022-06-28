@@ -18,7 +18,7 @@ function Navbar({ state, slug }) {
     try {
       const res = await categoriesApi.listArticlesByCategories();
       const firstSlug = res?.data?.categories.find(firstCategoryWithArticles)
-        .articles[0].slug;
+        ?.articles[0].slug;
       setArticleSlug(firstSlug);
     } catch (err) {
       logger.error(err);

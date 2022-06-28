@@ -5,7 +5,7 @@ import { Right, Down } from "neetoicons";
 import { Typography } from "neetoui";
 import { useHistory, useLocation } from "react-router-dom";
 
-import categoriesApi from "../../apis/categories";
+import categoriesApi from "apis/categories";
 
 function Sidebar({ selectedArticleCategory }) {
   const [categories, setCategories] = useState([]);
@@ -38,20 +38,20 @@ function Sidebar({ selectedArticleCategory }) {
   return (
     <div className="p-4">
       {categories.map(category => (
-        <div key={category.name} className="mb-2 cursor-pointer">
+        <div key={category.value} className="mb-2 cursor-pointer">
           <div
             className="mb-1 flex items-center space-x-2 text-lg font-medium"
-            onClick={() => handleSelectedCategory(category.name)}
+            onClick={() => handleSelectedCategory(category.label)}
           >
-            {selectedCategory === category.name ? (
+            {selectedCategory === category.label ? (
               <Down size={16} />
             ) : (
               <Right size={16} />
             )}
-            <p>{category.name}</p>
+            <p>{category.label}</p>
           </div>
           <div className="space-y-2 pl-6 font-medium text-gray-500">
-            {selectedCategory === category.name &&
+            {selectedCategory === category.label &&
               category.articles.map(article => (
                 <div
                   key={article.slug}

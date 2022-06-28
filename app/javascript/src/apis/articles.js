@@ -12,6 +12,8 @@ const destroy = slug => axios.delete(`/articles/${slug}`);
 
 const listByState = payload => axios.post(`/articles/list_by_state`, payload);
 
+const versions = slug => axios.get(`/articles/${slug}/versions`);
+
 const articlesApi = {
   list,
   create,
@@ -19,6 +21,7 @@ const articlesApi = {
   update,
   destroy,
   listByState,
+  versions,
 };
 
 export default articlesApi;

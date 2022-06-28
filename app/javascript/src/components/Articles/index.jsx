@@ -61,6 +61,7 @@ function Articles() {
   };
 
   const handleActionClick = (event, article) => {
+    setSelectedArticle(article);
     const action = event.target.getAttribute("action");
     if (action === "edit") {
       history.push(`/articles/edit/${article.slug}`);
@@ -132,7 +133,6 @@ function Articles() {
             columnData={filteredColumns}
             rowData={filteredArticles}
             onRowClick={(event, article) => {
-              setSelectedArticle(article);
               handleActionClick(event, article);
             }}
           />

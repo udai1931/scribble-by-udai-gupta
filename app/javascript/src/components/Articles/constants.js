@@ -32,8 +32,8 @@ export const TABLE_COLUMNS_FOR_DROPDOWN = [
     width: "20%",
   },
   {
-    dataIndex: "title",
-    key: "title",
+    dataIndex: "status",
+    key: "status",
     title: "Status",
     width: "20%",
   },
@@ -64,6 +64,7 @@ export const TABLE_COLUMNS_FOR_TABLE = [
     key: "category",
     title: "Category",
     width: "20%",
+    render: category => category.label,
   },
   {
     dataIndex: "state",

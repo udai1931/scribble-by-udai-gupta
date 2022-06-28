@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-json.extract! category,
-  :id,
-  :name
+json.label category.name
+json.value category.id
 json.count category.articles.count
