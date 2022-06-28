@@ -1,10 +1,16 @@
 # frozen_string_literal: true
 json.versions @versions do |version|
   json.extract! version,
-  :article_id,
-  :title,
-  :body,
-  :state,
-  :category_id,
-  :tag
+    :id,
+    :article_id,
+    :title,
+    :body,
+    :state
+  json.tag version['tag']
+  json.created_at version.created_at.strftime("%I:%M%p, %D")
+  json.slug @slug
+  json.category do
+    json.label version.category.name
+    json.value version.category.id
+  end
 end

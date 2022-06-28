@@ -41,7 +41,7 @@ function MenubarComponent({
   };
 
   const filteredCategories = categories.filter(category =>
-    category.name.toLowerCase().includes(search.toLowerCase())
+    category.label.toLowerCase().includes(search.toLowerCase())
   );
 
   return (
@@ -105,11 +105,11 @@ function MenubarComponent({
         {filteredCategories.length > 0 &&
           filteredCategories.map(category => (
             <MenuBar.Block
-              key={category.id}
-              label={category.name}
+              key={category.value}
+              label={category.label}
               count={category.count}
-              active={category.id === selectedTab}
-              onClick={() => setSelectedTab(category.id)}
+              active={category.value === selectedTab}
+              onClick={() => setSelectedTab(category.value)}
             />
           ))}
       </div>

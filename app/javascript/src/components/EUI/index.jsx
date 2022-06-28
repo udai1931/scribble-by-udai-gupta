@@ -35,7 +35,7 @@ function EUI() {
       <Header />
       <div className="flex" style={{ minHeight: "calc(100vh - 4rem)" }}>
         <div className="sidebar-container w-1/5 border-r-2 p-4">
-          <Sidebar selectedArticleCategory={article?.category} />
+          <Sidebar selectedArticleCategory={article?.category.label} />
         </div>
         <div className="component-container w-4/5 p-4">
           {loading ? (
@@ -48,7 +48,7 @@ function EUI() {
               <div className="mb-4">
                 {article && (
                   <span className="mr-4 rounded-md bg-indigo-200 py-1 px-2 text-sm font-medium text-indigo-600">
-                    {article?.category}
+                    {article?.category?.label}
                   </span>
                 )}
                 {article?.created_at}

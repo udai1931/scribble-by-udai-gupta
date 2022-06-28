@@ -18,7 +18,8 @@ function EditArticle() {
   const [categories, setCategories] = useState([]);
   const [article, setArticle] = useState(null);
   const [showRestoreModal, setShowRestoreModal] = useState(false);
-
+  const [versions, setVersions] = useState([]);
+  const [selectedVersion, setSelectedVersion] = useState("");
   const history = useHistory();
 
   const fetchArticle = async () => {
@@ -42,38 +43,55 @@ function EditArticle() {
   useEffect(() => {
     fetchArticle();
     fetchCategories();
+    fetchVersions();
   }, []);
 
   useEffect(() => {
     if (article) {
       setTitle(article.title);
       setBody(article.body);
-      setCategory({ value: `${article.category_id}`, label: article.category });
+      setCategory(article.category);
     }
   }, [article]);
 
-  const handleSubmit = async (e, state = "draft") => {
+  const fetchVersions = async () => {
+    try {
+      const res = await articlesApi.versions(slug);
+      setVersions([...res.data.versions]);
+    } catch (err) {
+      logger.error(err);
+    }
+  };
+
+  const handleSubmit = async (e, state = "draft", tag = "drafted", version) => {
     e.preventDefault();
     setLoading(true);
+    let articleObj = {};
+    if (version) {
+      articleObj = {
+        title: version.title,
+        body: version.body,
+        category_id: version.category.value,
+        state,
+        tag,
+      };
+    } else {
+      articleObj = { title, body, category_id: category.value, state, tag };
+    }
     try {
       await articlesApi.update({
         slug: article.slug,
         payload: {
-          article: {
-            title,
-            body: body,
-            state,
-            category_id: category.value,
-          },
+          article: articleObj,
         },
       });
-      setTitle("");
-      setBody("");
-      history.push("/articles");
+      fetchVersions();
+      fetchArticle();
     } catch (err) {
       logger.error(err);
     } finally {
       setLoading(false);
+      setShowRestoreModal(false);
     }
   };
   return (
@@ -81,6 +99,8 @@ function EditArticle() {
       <RestoreModal
         showRestoreModal={showRestoreModal}
         setShowRestoreModal={setShowRestoreModal}
+        selectedVersion={selectedVersion}
+        handleSubmit={handleSubmit}
       />
       <Navbar state={article?.state} slug={article?.slug} />
       <div className="w-9/12">
@@ -100,7 +120,11 @@ function EditArticle() {
         />
       </div>
       <div className="w-3/12">
-        <VersionHistory setShowRestoreModal={setShowRestoreModal} />
+        <VersionHistory
+          setShowRestoreModal={setShowRestoreModal}
+          versions={versions}
+          setSelectedVersion={setSelectedVersion}
+        />
       </div>
     </div>
   );

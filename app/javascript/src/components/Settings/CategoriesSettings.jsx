@@ -60,7 +60,7 @@ function CategoriesSettings() {
 
   const deleteCategory = async () => {
     try {
-      await categoriesApi.destroy({ id: selectedCategoryForDelete.id });
+      await categoriesApi.destroy({ id: selectedCategoryForDelete.value });
       setShowAlert(false);
       setSelectedCategoryForDelete({});
       fetchCategories();
@@ -70,8 +70,8 @@ function CategoriesSettings() {
   };
 
   const handleEditClick = category => {
-    setEditCategoryToggle(category.id);
-    setEditCategory(category.name);
+    setEditCategoryToggle(category.value);
+    setEditCategory(category.label);
   };
 
   const handleDeleteClick = category => {
@@ -94,7 +94,7 @@ function CategoriesSettings() {
         const item = items[index];
         if (item.index === index + 1) return;
         await categoriesApi.update({
-          id: item.id,
+          id: item.value,
           payload: { position: index + 1 },
         });
       }
@@ -146,8 +146,8 @@ function CategoriesSettings() {
             >
               {categories.map((category, idx) => (
                 <Draggable
-                  key={category.name}
-                  draggableId={category.name}
+                  key={category.label}
+                  draggableId={category.label}
                   index={idx}
                 >
                   {provided => (
@@ -159,11 +159,11 @@ function CategoriesSettings() {
                     >
                       <div className="flex space-x-4 font-semibold">
                         <Minus />
-                        {editCategoryToggle !== category.id && (
-                          <p>{category.name}</p>
+                        {editCategoryToggle !== category.value && (
+                          <p>{category.label}</p>
                         )}
                         <Input
-                          collapse={editCategoryToggle === category.id}
+                          collapse={editCategoryToggle === category.value}
                           value={editCategory}
                           setValue={setEditCategory}
                           handleSubmit={updateCategory}

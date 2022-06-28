@@ -35,6 +35,7 @@ class ArticlesController < ApplicationController
 
   def versions
     @versions = @article.versions
+    @slug = @article.slug
   end
 
   private

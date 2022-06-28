@@ -33,12 +33,9 @@ function Form({
             className="ml-1 w-2/6"
             size="small"
             label="Category"
-            defaultValue={category}
+            value={category}
             onChange={obj => setCategory(obj)}
-            options={categories?.map(category => ({
-              value: category.id,
-              label: category.name,
-            }))}
+            options={categories}
           />
         </div>
         <Textarea
@@ -58,7 +55,9 @@ function Form({
             style="bg-indigo-600"
             className="rounded-md bg-indigo-600 text-white"
           >
-            <li onClick={e => handleSubmit(e, "published")}>Publish Article</li>
+            <li onClick={e => handleSubmit(e, "published", "published")}>
+              Publish Article
+            </li>
           </ActionDropdown>
           <Button
             title="Cancel"

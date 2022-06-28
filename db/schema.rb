@@ -64,7 +64,7 @@ ActiveRecord::Schema.define(version: 2022_06_27_083554) do
     t.string "body", null: false
     t.string "state", null: false
     t.integer "category_id", null: false
-    t.string "tag", null: false
+    t.string "tag", default: "drafted", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.integer "article_id", null: false
