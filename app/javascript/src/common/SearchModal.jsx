@@ -15,7 +15,7 @@ function SearchModal({ search, setSearch, setShowSearchModal, articles }) {
   };
 
   return ReactDOM.createPortal(
-    <div className="absolute top-0 z-20 h-screen w-screen justify-center bg-gray-300 bg-opacity-75">
+    <div className="absolute top-0 z-30 h-screen w-screen justify-center bg-gray-300 bg-opacity-75">
       <div className="search-modal relative mx-auto w-4/12 rounded-md">
         <div className="flex items-center bg-white px-2">
           <Input

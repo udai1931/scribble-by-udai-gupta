@@ -10,11 +10,13 @@ import { TABLE_COLUMNS } from "./constants";
 function Analytics() {
   const [articles, setArticles] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
+  const [totalArticlesCount, setTotalArticlesCount] = useState(0);
 
   const fetchArticles = async () => {
     try {
-      const res = await articlesApi.list();
+      const res = await articlesApi.list({ page: currentPage });
       setArticles([...res.data.articles]);
+      setTotalArticlesCount(res.data.count.draft + res.data.count.published);
     } catch (err) {
       logger.error(err);
     }
@@ -22,15 +24,7 @@ function Analytics() {
 
   useEffect(() => {
     fetchArticles();
-  }, []);
-
-  const handlePageChange = page => {
-    setCurrentPage(page);
-  };
-
-  const si = (currentPage - 1) * 10;
-  const ei = Number(si) + 10;
-  const filteredArticles = articles.slice(si, ei);
+  }, [currentPage]);
 
   return (
     <div>
@@ -40,12 +34,12 @@ function Analytics() {
           <NeetoUITable
             allowRowClick
             columnData={TABLE_COLUMNS}
-            rowData={filteredArticles}
+            rowData={articles}
           />
           <div className="mt-4 ">
             <Pagination
-              count={200}
-              navigate={handlePageChange}
+              count={totalArticlesCount}
+              navigate={page => setCurrentPage(page)}
               pageNo={currentPage}
               pageSize={10}
             />

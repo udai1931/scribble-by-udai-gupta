@@ -12,7 +12,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_06_29_030050) do
+ActiveRecord::Schema.define(version: 2022_06_29_035539) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -24,7 +24,7 @@ ActiveRecord::Schema.define(version: 2022_06_29_030050) do
     t.string "body", null: false
     t.string "slug", null: false
     t.integer "user_id"
-    t.string "state", default: "Draft", null: false
+    t.string "state", default: "draft", null: false
     t.integer "category_id"
     t.integer "visits", default: 0
   end

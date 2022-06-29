@@ -24,7 +24,7 @@ function Header({ setShowSearchModal }) {
     <>
       <Typography
         style="h4"
-        className="fixed top-0 z-10 flex h-16 w-full items-center justify-center border-b-2 bg-white"
+        className="fixed top-0 z-20 flex h-16 w-full items-center justify-center border-b-2 bg-white"
       >
         {organizationName}
       </Typography>

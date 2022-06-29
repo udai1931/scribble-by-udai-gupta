@@ -36,7 +36,7 @@ function Navbar({ state, slug }) {
   }, [slug]);
 
   return (
-    <div className="fixed top-0 flex h-16 w-full items-center border-b-2 bg-white px-12">
+    <div className="fixed top-0 z-10 flex h-16 w-full items-center border-b-2 bg-white px-12">
       <div className="flex flex-row space-x-4">
         <NavItem url="/" title="Scribble" />
         <NavItem url="/articles" title="Articles" />

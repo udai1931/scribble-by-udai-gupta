@@ -31,6 +31,6 @@ export const TABLE_COLUMNS = [
     title: "Visits",
     width: "15%",
     render: visits => <div className="text-gray-600">{visits}</div>,
-    sorter: (a, b) => a - b,
+    sorter: (a, b) => a.visits - b.visits,
   },
 ];
