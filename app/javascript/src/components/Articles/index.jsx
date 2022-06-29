@@ -27,11 +27,6 @@ function Articles() {
 
   const history = useHistory();
 
-  useEffect(() => {
-    fetchArticles();
-    fetchCategories();
-  }, []);
-
   const fetchArticles = async () => {
     try {
       let res;
@@ -81,6 +76,10 @@ function Articles() {
       fetchArticles();
     }
   };
+
+  useEffect(() => {
+    fetchCategories();
+  }, []);
 
   useEffect(() => {
     fetchArticles();

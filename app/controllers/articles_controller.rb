@@ -11,6 +11,7 @@ class ArticlesController < ApplicationController
     @articles = Article.published.where(
       "lower(title) LIKE :search",
       search: "%#{params[:search]}%") unless params[:search].blank?
+    @articles = @articles.page(params[:page]) unless params[:page].blank?
   end
 
   def create

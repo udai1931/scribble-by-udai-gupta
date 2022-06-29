@@ -32,7 +32,7 @@ function EUI() {
 
   const fetchArticles = async () => {
     try {
-      const response = await articlesApi.list(search);
+      const response = await articlesApi.list({ text: search });
       setArticles(response.data.articles);
     } catch (err) {
       logger.error(err);

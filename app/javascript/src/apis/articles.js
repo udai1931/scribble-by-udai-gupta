@@ -1,6 +1,7 @@
 import axios from "axios";
 
-const list = (text = "") => axios.get(`/articles?search=${text}`);
+const list = ({ text = "", page = "" } = {}) =>
+  axios.get(`/articles?search=${text}&page=${page}`);
 
 const create = payload => axios.post("/articles", payload);
 
