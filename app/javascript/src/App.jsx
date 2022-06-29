@@ -14,6 +14,7 @@ import organizationApi from "apis/organization";
 import redirectionsApi from "apis/redirections";
 import { initializeLogger } from "common/logger";
 import PrivateRoute from "common/PrivateRoute";
+import Analytics from "components/Analytics";
 import Articles from "components/Articles";
 import CreateArticle from "components/CreateArticle";
 import EditArticle from "components/EditArticle";
@@ -116,6 +117,12 @@ const App = () => {
             condition={isLoggedIn}
             path="/articles/edit/:slug"
             component={EditArticle}
+          />
+          <PrivateRoute
+            exact
+            condition={isLoggedIn}
+            path="/analytics"
+            component={Analytics}
           />
         </Switch>
       </Router>

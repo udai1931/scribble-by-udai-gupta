@@ -5,7 +5,8 @@ json.extract! article,
   :title,
   :body,
   :state,
-  :slug
+  :slug,
+  :visits
 json.created_at article.created_at.strftime("%d %b %Y")
 json.user article.user.name
 json.category do

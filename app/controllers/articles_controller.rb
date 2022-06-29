@@ -20,6 +20,7 @@ class ArticlesController < ApplicationController
   end
 
   def show
+    update_visits_count if params[:eui] == "true"
     render
   end
 
@@ -59,5 +60,10 @@ class ArticlesController < ApplicationController
     def create_new_version
       version = @article.versions.new(article_params)
       version.save!
+    end
+
+    def update_visits_count
+      @article.visits += 1
+      @article.save!
     end
 end

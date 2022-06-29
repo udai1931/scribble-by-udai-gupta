@@ -4,7 +4,8 @@ const list = (text = "") => axios.get(`/articles?search=${text}`);
 
 const create = payload => axios.post("/articles", payload);
 
-const show = slug => axios.get(`/articles/${slug}`);
+const show = (slug, visitFromEUI = false) =>
+  axios.get(`/articles/${slug}?eui=${visitFromEUI}`);
 
 const update = ({ slug, payload }) => axios.put(`/articles/${slug}`, payload);
 
