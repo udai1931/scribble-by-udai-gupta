@@ -21,7 +21,7 @@ function EUI() {
   const fetchArticle = async () => {
     setLoading(true);
     try {
-      const response = await articlesApi.show(slug);
+      const response = await articlesApi.show(slug, true);
       setArticle(response.data.article);
     } catch (err) {
       logger.error(err);

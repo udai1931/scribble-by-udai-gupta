@@ -1,0 +1,10 @@
+.analytics-container{
+  position: fixed;
+  top: 4rem;
+  height: calc(100vh - 4rem);
+  overflow: auto;
+}
+
+.analytics-container tr:nth-child(odd) {
+  background-color: #F8F9F9;
+}

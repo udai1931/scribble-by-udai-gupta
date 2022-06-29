@@ -129,7 +129,7 @@ function Articles() {
           </Typography>
           <NeetoUITable
             allowRowClick
-            className="contact-table w-max-[75vw]"
+            className="w-max-[75vw]"
             columnData={filteredColumns}
             rowData={filteredArticles}
             onRowClick={(event, article) => {
