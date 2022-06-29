@@ -8,6 +8,9 @@ class ArticlesController < ApplicationController
 
   def index
     @articles = Article.all
+    @articles = Article.published.where(
+      "lower(title) LIKE :search",
+      search: "%#{params[:search]}%") unless params[:search].blank?
   end
 
   def create
