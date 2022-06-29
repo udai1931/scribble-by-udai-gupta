@@ -7,11 +7,11 @@ class ArticleTest < ActiveSupport::TestCase
     @organization = create(:organization)
     @user = create(:user, organization: @organization)
     @category = create(:category)
-    @article = create(:article, user: @user, category: @category)
+    @article = create(:article, user: @user, category: @category, state: "draft")
   end
 
   def test_values_of_created_at_and_updated_at
-    article = Article.new(title: "Test", body: "Desc", user: @user, category: @category)
+    article = Article.new(title: "Test", body: "Desc", user: @user, category: @category, state: "draft")
     assert_nil article.created_at
     assert_nil article.updated_at
     article.save!

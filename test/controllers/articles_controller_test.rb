@@ -7,7 +7,7 @@ class ArticlesControllerTest < ActionDispatch::IntegrationTest
     @organization = create(:organization)
     @user = create(:user, organization: @organization)
     @category = create(:category)
-    @article = create(:article, category: @category, user: @user)
+    @article = create(:article, category: @category, user: @user, state: "draft")
     @headers = headers(@organization)
     @headers_without_token = headers_without_token
   end
@@ -44,7 +44,7 @@ class ArticlesControllerTest < ActionDispatch::IntegrationTest
       params: {
         article: {
           title: "test", body: "body", user_id: @user.id,
-          category_id: @category.id
+          category_id: @category.id, state: "draft"
         }
       },
       headers: @headers
@@ -71,14 +71,6 @@ class ArticlesControllerTest < ActionDispatch::IntegrationTest
     assert_difference "Article.count", -1 do
       delete article_path(@article.slug), headers: @headers
     end
-  end
-
-  def test_to_update_the_article
-    article_params = { article: { state: "published", title: "Test 2" } }
-    put article_path(@article.slug), params: article_params, headers: @headers
-    assert_response :success
-    @article.reload
-    assert @article.published?
   end
 
   def test_should_get_articles_for_a_state
