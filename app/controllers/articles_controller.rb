@@ -5,23 +5,18 @@ class ArticlesController < ApplicationController
   before_action :load_article!, only: %i[show update destroy versions]
   before_action :load_count, only: %i[index list_by_state]
   after_action :create_new_version, only: %i[update]
+  after_action :update_visits_count, only: %i[show]
 
   def index
-    @articles = Article.all
-    @articles = Article.published.where(
-      "lower(title) LIKE :search",
-      search: "%#{params[:search]}%") unless params[:search].blank?
-    @articles = @articles.page(params[:page]) unless params[:page].blank?
+    @articles = Article.order(id: :desc).page(params[:page])
   end
 
   def create
-    article = current_user.articles.new(article_params)
-    article.save!
+    current_user.articles.create!(article_params)
     respond_with_success(t("successfully_created", entity: "Article"))
   end
 
   def show
-    update_visits_count if params[:eui] == "true"
     render
   end
 
@@ -35,12 +30,23 @@ class ArticlesController < ApplicationController
   end
 
   def list_by_state
-    @articles = Article.where(state: article_params[:state])
+    articles = Article.where(state: article_params[:state])
+    @count = articles.count
+    @articles = articles.page(params[:page])
+  end
+
+  def count_by_state
+    @draft = Article.draft.length
+    @published = Article.published.length
   end
 
   def versions
     @versions = @article.versions
     @slug = @article.slug
+  end
+
+  def list_in_order_of_visits
+    @articles = Article.order(visits: :desc).page(params[:page])
   end
 
   private
@@ -64,7 +70,9 @@ class ArticlesController < ApplicationController
     end
 
     def update_visits_count
-      @article.visits += 1
-      @article.save!
+      if params[:eui] == "true"
+        @article.visits += 1
+        @article.save!
+      end
     end
 end

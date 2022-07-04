@@ -9,8 +9,7 @@ class CategoriesController < ApplicationController
   end
 
   def create
-    @category = Category.new(category_params)
-    @category.save!
+    @category = Category.create!(category_params)
   end
 
   def update
@@ -22,7 +21,9 @@ class CategoriesController < ApplicationController
   end
 
   def list_articles
-    render
+    articles = @category.articles
+    @count = articles.count
+    @articles = articles.page(params[:page])
   end
 
   def list_articles_in_order
@@ -40,6 +41,6 @@ class CategoriesController < ApplicationController
     end
 
     def reorder_categories
-      @categories = Category.order(:position)
+      @categories = Category.order(position: :desc)
     end
 end

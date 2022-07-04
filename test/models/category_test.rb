@@ -4,7 +4,7 @@ require "test_helper"
 
 class CategoryTest < ActiveSupport::TestCase
   def setup
-    @category = build(:category)
+    @category = create(:category)
   end
 
   def test_category_should_be_invalid_without_name
@@ -13,14 +13,13 @@ class CategoryTest < ActiveSupport::TestCase
   end
 
   def test_category_should_have_unique_name
-    @category.save
     category_2 = build(:category, name: @category.name)
     assert category_2.invalid?
   end
 
   def test_valid_category_should_be_saved
     assert_difference "Category.count" do
-      @category.save
+      create(:category)
     end
   end
 end

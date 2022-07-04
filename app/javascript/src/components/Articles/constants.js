@@ -44,33 +44,28 @@ export const TABLE_COLUMNS_FOR_TABLE = [
     dataIndex: "title",
     key: "title",
     title: "Title",
-    width: "20%",
     sorter: (a, b) => a.title.localeCompare(b.title),
   },
   {
     dataIndex: "user",
     key: "user",
     title: "Author",
-    width: "20%",
   },
   {
     dataIndex: "created_at",
     key: "created_at",
     title: "Date",
-    width: "20%",
   },
   {
     dataIndex: "category",
     key: "category",
     title: "Category",
-    width: "20%",
     render: category => category.label,
   },
   {
     dataIndex: "state",
     key: "state",
     title: "Status",
-    width: "20%",
     render: state => (
       <div className="flex space-x-2">{state && startCase(state)}</div>
     ),
@@ -79,7 +74,6 @@ export const TABLE_COLUMNS_FOR_TABLE = [
     dataIndex: "actions",
     key: "actions",
     title: "",
-    width: "20%",
     render: () => (
       <div className="flex space-x-2">
         <Delete className="delete" action="delete" />

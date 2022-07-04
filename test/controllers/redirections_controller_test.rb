@@ -20,33 +20,9 @@ class RedirectionsControllerTest < ActionDispatch::IntegrationTest
 
   def test_should_create_valid_redirection
     count = Redirection.count
-    post redirections_path, params: { redirection: { from: "url1", to: "url2" } }, headers: @headers
+    post redirections_path, params: { redirection: { from: "/articles/url1", to: "/articles/url2" } }, headers: @headers
     assert_response :success
     assert_equal count + 1, Redirection.count
-  end
-
-  def test_shouldnt_create_redirection_without_from
-    post redirections_path, params: { redirection: { from: "", to: "url2" } },
-      headers: @headers
-    assert_response :unprocessable_entity
-    response_json = response.parsed_body
-    assert_equal response_json["error"], t("blank", entity: "From")
-  end
-
-  def test_shouldnt_create_redirection_without_to
-    post redirections_path, params: { redirection: { from: "url1", to: "" } },
-      headers: @headers
-    assert_response :unprocessable_entity
-    response_json = response.parsed_body
-    assert_equal response_json["error"], t("blank", entity: "To")
-  end
-
-  def test_shouldnt_create_redirection_with_duplicate_from
-    post redirections_path, params: { redirection: { from: @redirection.from, to: "url2" } },
-      headers: @headers
-    assert_response :unprocessable_entity
-    response_json = response.parsed_body
-    assert_equal response_json["error"], t("taken", entity: "From")
   end
 
   def test_should_destroy_redirection
@@ -56,7 +32,7 @@ class RedirectionsControllerTest < ActionDispatch::IntegrationTest
   end
 
   def test_to_update_the_redirection
-    redirection_params = { redirection: { from: "url3", to: "url4" } }
+    redirection_params = { redirection: { from: "/articles/url3", to: "/articles/url4" } }
     put redirection_path(@redirection.id), params: redirection_params, headers: @headers
     assert_response :success
   end

@@ -20,7 +20,6 @@ import CreateArticle from "components/CreateArticle";
 import EditArticle from "components/EditArticle";
 import EnterPassword from "components/EnterPassword";
 import EUI from "components/EUI";
-import Home from "components/Home";
 import Settings from "components/Settings";
 
 import { getFromLocalStorage } from "./utils/storage";
@@ -83,12 +82,9 @@ const App = () => {
           {redirections.map(({ from, to, id }) => (
             <Redirect key={id} exact from={from} to={to} />
           ))}
-          <PrivateRoute
-            exact
-            condition={isLoggedIn}
-            path="/"
-            component={Home}
-          />
+          <PrivateRoute exact condition={isLoggedIn} path="/">
+            <Redirect to="/articles" />
+          </PrivateRoute>
           <PrivateRoute
             condition={isLoggedIn}
             path="/settings"

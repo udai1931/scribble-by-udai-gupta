@@ -14,8 +14,7 @@
 }
 
 .table-container {
-  max-height: calc(100vh - 4rem);
-  width: calc(100vw - 324px);
+  max-width: calc(100vw - 324px - 1.5rem);
   margin-top: 4rem;
   margin-left: 324px;
 }

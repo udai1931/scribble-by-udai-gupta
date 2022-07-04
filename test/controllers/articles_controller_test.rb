@@ -21,7 +21,7 @@ class ArticlesControllerTest < ActionDispatch::IntegrationTest
     assert_equal all_articles.length, count
   end
 
-  def test_shouldnt_list_all_articles_for_invalid_user
+  def test_shouldnt_list_articles_for_invalid_user
     get articles_path, headers: @headers_without_token
     assert_response :unauthorized
     response_body = response.parsed_body
@@ -29,7 +29,7 @@ class ArticlesControllerTest < ActionDispatch::IntegrationTest
   end
 
   def test_should_list_all_articles_for_valid_user_with_draft_and_published_articles
-    get articles_path, headers: @headers
+    get articles_path + "/count_by_state", headers: @headers
     assert_response :success
     response_body = response.parsed_body
     all_articles = response_body["count"]
@@ -51,20 +51,6 @@ class ArticlesControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
     response_json = response.parsed_body
     assert_equal response_json["notice"], t("successfully_created", entity: "Article")
-  end
-
-  def test_shouldnt_create_article_without_title
-    post articles_path,
-      params: {
-        article: {
-          title: "", body: "Test body", user_id: @user.id,
-          category_id: @category.id
-        }
-      },
-      headers: @headers
-    assert_response :unprocessable_entity
-    response_json = response.parsed_body
-    assert_equal response_json["error"], t("blank", entity: "Title")
   end
 
   def test_should_destroy_article
