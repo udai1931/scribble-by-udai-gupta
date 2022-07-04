@@ -20,7 +20,7 @@ jobs:
       - checkout
       - run: gem install bundler:2.2.20
       #install sqlite dependency
-      - run: apt-get install debian-keyring debian-archive-keyring && apt-key update
+      - run:  sudo apt-get install debian-keyring debian-archive-keyring && sudo apt-key update
       #key update
       - run: sudo apt update && sudo apt install zlib1g-dev libsqlite3-dev
       # Bundle install
