@@ -93,7 +93,7 @@ const App = () => {
           <PrivateRoute
             exact
             condition={isLoggedIn}
-            path={["/", "/articles"]}
+            path="/articles"
             component={Articles}
           />
           <PrivateRoute
