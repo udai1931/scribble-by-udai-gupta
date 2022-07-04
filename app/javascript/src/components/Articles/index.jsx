@@ -7,6 +7,7 @@ import { useHistory } from "react-router-dom";
 import articlesApi from "apis/articles";
 import categoriesApi from "apis/categories";
 import Navbar from "common/Navbar";
+import Pagination from "common/Pagination";
 
 import {
   TABLE_COLUMNS_FOR_DROPDOWN,
@@ -24,23 +25,38 @@ function Articles() {
   const [showAlert, setShowAlert] = useState(false);
   const [selectedArticle, setSelectedArticle] = useState(null);
   const [unselectedColumns, setUnselectedColumns] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalArticlesCount, setTotalArticlesCount] = useState(0);
 
   const history = useHistory();
 
-  const fetchArticles = async () => {
+  const fetchCountByState = async () => {
+    try {
+      const res = await articlesApi.countByState();
+      setArticlesCount(res.data.count);
+    } catch (err) {
+      logger.error(err);
+    }
+  };
+
+  const fetchArticles = async (page = currentPage) => {
     try {
       let res;
       if (selectedTab === "All") {
-        res = await articlesApi.list();
+        res = await articlesApi.list({ page });
       } else if (selectedTab === "draft" || selectedTab === "published") {
         res = await articlesApi.listByState({
-          article: { state: selectedTab },
+          page: currentPage,
+          payload: { article: { state: selectedTab } },
         });
       } else {
-        res = await categoriesApi.listArticlesByCategory({ id: selectedTab });
+        res = await categoriesApi.listArticlesByCategory({
+          id: selectedTab,
+          page: currentPage,
+        });
       }
       setArticles([...res.data.articles]);
-      setArticlesCount({ ...res.data.count });
+      setTotalArticlesCount(res.data.count);
     } catch (err) {
       logger.error(err);
     }
@@ -74,16 +90,23 @@ function Articles() {
       setShowAlert(false);
       fetchCategories();
       fetchArticles();
+      fetchCountByState();
     }
   };
 
   useEffect(() => {
     fetchCategories();
+    fetchCountByState();
   }, []);
 
   useEffect(() => {
-    fetchArticles();
+    setCurrentPage(1);
+    fetchArticles(1);
   }, [selectedTab]);
+
+  useEffect(() => {
+    fetchArticles();
+  }, [currentPage]);
 
   const filteredArticles = articles.filter(article =>
     article.title.toLowerCase().includes(search.toLowerCase())
@@ -128,12 +151,16 @@ function Articles() {
           </Typography>
           <NeetoUITable
             allowRowClick
-            className="w-max-[75vw]"
             columnData={filteredColumns}
             rowData={filteredArticles}
             onRowClick={(event, article) => {
               handleActionClick(event, article);
             }}
+          />
+          <Pagination
+            currentPage={currentPage}
+            setCurrentPage={setCurrentPage}
+            totalArticlesCount={totalArticlesCount}
           />
         </div>
       </div>

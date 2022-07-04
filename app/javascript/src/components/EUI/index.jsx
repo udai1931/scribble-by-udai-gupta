@@ -5,6 +5,7 @@ import { PageLoader } from "neetoui";
 import { useParams } from "react-router-dom";
 
 import articlesApi from "apis/articles";
+import articlesEuiApi from "apis/eui/articles";
 import SearchModal from "common/SearchModal";
 
 import Header from "./Header";
@@ -30,9 +31,9 @@ function EUI() {
     }
   };
 
-  const fetchArticles = async () => {
+  const fetchArticlesOnSearch = async () => {
     try {
-      const response = await articlesApi.list({ text: search });
+      const response = await articlesEuiApi.listOnSearch({ text: search });
       setArticles(response.data.articles);
     } catch (err) {
       logger.error(err);
@@ -44,6 +45,7 @@ function EUI() {
       e.preventDefault();
       setShowSearchModal(true);
     } else if (e.key === "Escape") {
+      setSearch("");
       setShowSearchModal(false);
     }
   };
@@ -60,7 +62,7 @@ function EUI() {
   }, []);
 
   useEffect(() => {
-    if (search) fetchArticles();
+    if (search) fetchArticlesOnSearch();
   }, [search]);
 
   return (

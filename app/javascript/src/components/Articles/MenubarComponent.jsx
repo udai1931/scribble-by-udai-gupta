@@ -25,7 +25,7 @@ function MenubarComponent({
   const createCategory = async () => {
     try {
       const res = await categoriesApi.create({ name: newCategory });
-      setCategories([...categories, res.data.category]);
+      setCategories([res.data.category, ...categories]);
       setNewCategory("");
       setIsCreateCollapsed(prev => !prev);
     } catch (err) {
@@ -100,18 +100,16 @@ function MenubarComponent({
         setValue={setNewCategory}
         handleSubmit={createCategory}
       />
-
       <div className="categories-container">
-        {filteredCategories.length > 0 &&
-          filteredCategories.map(category => (
-            <MenuBar.Block
-              key={category.value}
-              label={category.label}
-              count={category.count}
-              active={category.value === selectedTab}
-              onClick={() => setSelectedTab(category.value)}
-            />
-          ))}
+        {filteredCategories.map(category => (
+          <MenuBar.Block
+            key={category.value}
+            label={category.label}
+            count={category.count}
+            active={category.value === selectedTab}
+            onClick={() => setSelectedTab(category.value)}
+          />
+        ))}
       </div>
     </MenuBar>
   );

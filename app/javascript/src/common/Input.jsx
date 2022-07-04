@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Check } from "neetoicons";
+import { Check, Close } from "neetoicons";
 
 function Input({ collapse, setCollapse, value, setValue, handleSubmit }) {
   const handleEscAndEnterKeyDown = event => {
@@ -24,7 +24,16 @@ function Input({ collapse, setCollapse, value, setValue, handleSubmit }) {
             onChange={e => setValue(e.target.value)}
             onKeyDown={handleEscAndEnterKeyDown}
           />
-          <Check className="ml-auto cursor-pointer" onClick={handleSubmit} />
+          <Check
+            size={32}
+            className="ml-auto cursor-pointer"
+            onClick={handleSubmit}
+          />
+          <Close
+            size={32}
+            className="ml-auto cursor-pointer  border-l-2 pl-2"
+            onClick={() => setCollapse(true)}
+          />
         </div>
       )}
     </>

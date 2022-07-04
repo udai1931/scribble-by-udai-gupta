@@ -31,14 +31,6 @@ class CategoriesControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  def test_shouldnt_create_category_without_name
-    post categories_path, params: { category: { name: "" } },
-      headers: @headers
-    assert_response :unprocessable_entity
-    response_json = response.parsed_body
-    assert_equal response_json["error"], t("blank", entity: "Name")
-  end
-
   def test_should_destroy_article
     assert_difference "Category.count", -1 do
       delete category_path(@category.id), headers: @headers

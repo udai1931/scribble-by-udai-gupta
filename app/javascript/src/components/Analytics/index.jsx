@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 
-import { Table as NeetoUITable, Pagination } from "neetoui";
+import { Table as NeetoUITable } from "neetoui";
 
 import articlesApi from "apis/articles";
 import Navbar from "common/Navbar";
+import Pagination from "common/Pagination";
 
 import { TABLE_COLUMNS } from "./constants";
 
@@ -14,9 +15,9 @@ function Analytics() {
 
   const fetchArticles = async () => {
     try {
-      const res = await articlesApi.list({ page: currentPage });
+      const res = await articlesApi.listInOrderOfVisits({ page: currentPage });
       setArticles([...res.data.articles]);
-      setTotalArticlesCount(res.data.count.draft + res.data.count.published);
+      setTotalArticlesCount(res.data.count);
     } catch (err) {
       logger.error(err);
     }
@@ -36,14 +37,11 @@ function Analytics() {
             columnData={TABLE_COLUMNS}
             rowData={articles}
           />
-          <div className="mt-4 ">
-            <Pagination
-              count={totalArticlesCount}
-              navigate={page => setCurrentPage(page)}
-              pageNo={currentPage}
-              pageSize={10}
-            />
-          </div>
+          <Pagination
+            currentPage={currentPage}
+            setCurrentPage={setCurrentPage}
+            totalArticlesCount={totalArticlesCount}
+          />
         </div>
       </div>
     </div>

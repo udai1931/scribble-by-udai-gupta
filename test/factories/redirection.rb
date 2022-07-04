@@ -2,7 +2,7 @@
 
 FactoryBot.define do
   factory :redirection do
-    from { Faker::Internet.url }
-    to { Faker::Internet.url }
+    from { "/articles/#{Faker::Name.first_name}" }
+    to { "/articles/#{Faker::Name.first_name}" }
   end
 end

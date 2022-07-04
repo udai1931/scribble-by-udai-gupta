@@ -6,10 +6,10 @@ class ApplicationController < ActionController::Base
   include Authenticable
 
   def organization
-    @organization = Organization.first
+    @_organization ||= Organization.first
   end
 
   def current_user
-    @current_user = organization.users.first
+    @_current_user ||= organization.users.first
   end
 end
