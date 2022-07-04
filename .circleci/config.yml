@@ -18,7 +18,7 @@ jobs:
 
     steps:
       - checkout
-      - run: gem install bundler:2.2.20
+      - run: gem install bundler:2.3.14
       #install sqlite dependency
       - run: wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
       - run: sudo apt update
@@ -32,7 +32,6 @@ jobs:
           chmod a+x ./bin/yarn && ./bin/yarn install --cache-folder
           vendor/node_modules
       # Ensure Rubocop has linted all Ruby files
-      - run: bundle exec rubocop -a
       - run: bundle exec rubocop
       # Ensure Prettier+ESLint has been run on all JS files
       - run:
