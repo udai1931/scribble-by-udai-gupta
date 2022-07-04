@@ -32,6 +32,7 @@ jobs:
           chmod a+x ./bin/yarn && ./bin/yarn install --cache-folder
           vendor/node_modules
       # Ensure Rubocop has linted all Ruby files
+      - run: bundle exec rubocop -a
       - run: bundle exec rubocop
       # Ensure Prettier+ESLint has been run on all JS files
       - run:
