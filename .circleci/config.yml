@@ -26,7 +26,7 @@ jobs:
       # Bundle install
       - run:
           bundle check --path=vendor/bundle || bundle install
-          --path=vendor/bundle --jobs=4 --retry=3
+           --jobs=4 --retry=3
       # Yarn install
       - run:
           chmod a+x ./bin/yarn && ./bin/yarn install --cache-folder
@@ -39,7 +39,6 @@ jobs:
           "./app/javascript/src/**/*.{js,jsx,json}"
       # Setup database
       - run: cp config/database.yml.ci config/database.yml
-      - run: bundle install
       - run: bundle exec rails db:create db:schema:load --trace
       # Generate assets
       - run: chmod a+x ./bin/webpack && ./bin/webpack
