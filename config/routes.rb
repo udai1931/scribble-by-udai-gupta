@@ -11,8 +11,8 @@ Rails.application.routes.draw do
       end
       member do
         get :versions
-        get :list_future_updates
-        post :create_future_update
+        get :list_schedules
+        post :create_schedule
       end
     end
     resources :categories, except: %i[show new edit] do

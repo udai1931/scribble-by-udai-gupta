@@ -2,7 +2,7 @@
 # frozen_string_literal: true
 
 class ArticlesController < ApplicationController
-  before_action :load_article!, only: %i[show update destroy versions list_future_updates create_future_update]
+  before_action :load_article!, only: %i[show update destroy versions list_schedules create_schedule]
   before_action :load_count, only: %i[index list_by_state]
   after_action :create_new_version, only: %i[update]
   after_action :update_visits_count, only: %i[show]
@@ -21,7 +21,7 @@ class ArticlesController < ApplicationController
   end
 
   def update
-    @article.update!(article_params.except(:tag))
+    @article.update!(article_params.except(:tag, :execution_time))
     respond_with_success(t("successfully_updated", entity: "Article"))
   end
 
@@ -49,18 +49,20 @@ class ArticlesController < ApplicationController
     @articles = Article.order(visits: :desc).page(params[:page])
   end
 
-  def list_future_updates
-    @future_updates = @article.future_article_updates.order(scheduled_at: :asc)
+  def list_schedules
+    @schedules = @article.schedules.order(execution_time: :asc)
   end
 
-  def create_future_update
-    @article.future_article_updates.create!(state: params[:state], scheduled_at: params[:scheduled_at])
+  def create_schedule
+    execution_time = create_execution_time
+    @article.schedules.create!(status: params[:status], execution_time: execution_time)
+    respond_with_success(t("successfully_created", entity: "Update Schedule"))
   end
 
   private
 
     def article_params
-      params.require(:article).permit(:title, :body, :state, :category_id, :tag, :scheduled_at)
+      params.require(:article).permit(:title, :body, :state, :category_id, :tag, :date, :time)
     end
 
     def load_article!
@@ -82,5 +84,9 @@ class ArticlesController < ApplicationController
         @article.visits += 1
         @article.save!
       end
+    end
+
+    def create_execution_time
+      Time.zone.at(params[:execution_time].to_i)
     end
 end

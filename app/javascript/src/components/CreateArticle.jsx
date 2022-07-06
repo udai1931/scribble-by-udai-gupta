@@ -53,18 +53,20 @@ function CreateArticle() {
   return (
     <>
       <Navbar />
-      <Form
-        loading={loading}
-        title={title}
-        body={body}
-        setTitle={setTitle}
-        setBody={setBody}
-        category={category}
-        setCategory={setCategory}
-        categories={categories}
-        handleSubmit={handleSubmit}
-        handleClose={() => history.push("/articles")}
-      />
+      <div className="mt-16">
+        <Form
+          loading={loading}
+          title={title}
+          body={body}
+          setTitle={setTitle}
+          setBody={setBody}
+          category={category}
+          setCategory={setCategory}
+          categories={categories}
+          handleSubmit={handleSubmit}
+          handleClose={() => history.push("/articles")}
+        />
+      </div>
     </>
   );
 }

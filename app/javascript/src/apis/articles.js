@@ -21,6 +21,12 @@ const countByState = () => axios.get(`/articles/count_by_state`);
 const listInOrderOfVisits = ({ page = 1 }) =>
   axios.get(`/articles/list_in_order_of_visits?page=${page}`);
 
+const listUpdateSchedules = slug =>
+  axios.get(`/articles/${slug}/list_schedules`);
+
+const createUpdateSchedule = ({ slug, payload }) =>
+  axios.post(`/articles/${slug}/create_schedule`, payload);
+
 const articlesApi = {
   list,
   create,
@@ -31,6 +37,8 @@ const articlesApi = {
   versions,
   countByState,
   listInOrderOfVisits,
+  listUpdateSchedules,
+  createUpdateSchedule,
 };
 
 export default articlesApi;
