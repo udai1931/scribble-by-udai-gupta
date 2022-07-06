@@ -5,6 +5,7 @@ import { Input, Select, Textarea, ActionDropdown } from "neetoui";
 import Button from "common/Button";
 
 function Form({
+  editPage = false,
   handleSubmit,
   loading,
   title,
@@ -15,9 +16,10 @@ function Form({
   category,
   setCategory,
   handleClose,
+  setIsPaneOpen,
 }) {
   return (
-    <div className="mt-16 flex justify-center py-6">
+    <div className="flex justify-center py-6">
       <div className="form-wrapper w-7/12 p-2 text-gray-600">
         <div className="m-2 mb-4 flex justify-between">
           <Input
@@ -58,6 +60,11 @@ function Form({
             <li onClick={e => handleSubmit(e, "published", "published")}>
               Publish Article
             </li>
+            {editPage && (
+              <li onClick={() => setIsPaneOpen(true)}>
+                Publish/Unpublish Later
+              </li>
+            )}
           </ActionDropdown>
           <Button
             title="Cancel"

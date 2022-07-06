@@ -9,7 +9,11 @@ Rails.application.routes.draw do
         get :count_by_state
         get :list_in_order_of_visits
       end
-      get :versions, on: :member
+      member do
+        get :versions
+        get :list_schedules
+        post :create_schedule
+      end
     end
     resources :categories, except: %i[show new edit] do
       get :list_articles, on: :member
@@ -21,6 +25,7 @@ Rails.application.routes.draw do
     namespace :eui do
       resources :articles, only: %i[index]
     end
+    resource :future_article_update, only: %i[create]
   end
 
   root "home#index"
