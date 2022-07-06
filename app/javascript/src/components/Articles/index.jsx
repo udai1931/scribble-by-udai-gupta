@@ -150,7 +150,7 @@ function Articles() {
             {articlesCount?.draft + articlesCount?.published} Articles
           </Typography>
           <NeetoUITable
-            allowRowClick
+            // allowRowClick
             columnData={filteredColumns}
             rowData={filteredArticles}
             onRowClick={(event, article) => {
