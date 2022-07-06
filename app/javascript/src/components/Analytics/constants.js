@@ -1,5 +1,7 @@
 import React from "react";
 
+import { Link } from "react-router-dom";
+
 import { startCase } from "utils/changeCase";
 
 export const TABLE_COLUMNS = [
@@ -8,8 +10,10 @@ export const TABLE_COLUMNS = [
     key: "title",
     title: "Title",
     width: "30%",
-    render: title => (
-      <div className="font-medium text-indigo-600">{startCase(title)}</div>
+    render: (title, obj) => (
+      <Link to={`/articles/edit/${obj.slug}`}>
+        <div className="font-medium text-indigo-600">{startCase(title)}</div>
+      </Link>
     ),
   },
   {
