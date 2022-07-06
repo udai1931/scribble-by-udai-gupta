@@ -1,6 +1,7 @@
 import React from "react";
 
 import { Delete, Edit } from "neetoicons";
+import { Link } from "react-router-dom";
 
 import { startCase } from "utils/changeCase";
 
@@ -45,6 +46,11 @@ export const TABLE_COLUMNS_FOR_TABLE = [
     key: "title",
     title: "Title",
     sorter: (a, b) => a.title.localeCompare(b.title),
+    render: (title, obj) => (
+      <Link to={`/articles/edit/${obj.slug}`}>
+        <div className="font-medium text-indigo-600">{title}</div>
+      </Link>
+    ),
   },
   {
     dataIndex: "user",
