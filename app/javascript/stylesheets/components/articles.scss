@@ -34,3 +34,15 @@
   -moz-box-shadow: none;
   box-shadow: none;
 }
+
+.edit-article-sidebar-container{
+  height: calc(100vh - 4rem);
+}
+
+.version-history-container{
+  height: 75%;
+}
+
+.pending-updates-container{
+  height: 25%;
+}
