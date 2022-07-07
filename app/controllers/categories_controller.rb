@@ -21,7 +21,7 @@ class CategoriesController < ApplicationController
   end
 
   def list_articles
-    articles = @category.articles
+    articles = @category.articles.where("lower(title) LIKE ?", "%#{params[:title].downcase}%")
     @count = articles.count
     @articles = articles.page(params[:page])
   end

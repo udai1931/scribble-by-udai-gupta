@@ -43,16 +43,18 @@ function Articles() {
     try {
       let res;
       if (selectedTab === "All") {
-        res = await articlesApi.list({ page });
+        res = await articlesApi.list({ page, search });
       } else if (selectedTab === "draft" || selectedTab === "published") {
         res = await articlesApi.listByState({
           page: currentPage,
+          search,
           payload: { article: { state: selectedTab } },
         });
       } else {
         res = await categoriesApi.listArticlesByCategory({
           id: selectedTab,
           page: currentPage,
+          search,
         });
       }
       setArticles([...res.data.articles]);
@@ -100,17 +102,14 @@ function Articles() {
   }, []);
 
   useEffect(() => {
+    setSearch("");
     setCurrentPage(1);
     fetchArticles(1);
   }, [selectedTab]);
 
   useEffect(() => {
     fetchArticles();
-  }, [currentPage]);
-
-  const filteredArticles = articles.filter(article =>
-    article.title.toLowerCase().includes(search.toLowerCase())
-  );
+  }, [currentPage, search]);
 
   const filteredColumns = TABLE_COLUMNS_FOR_TABLE.filter(
     col => !unselectedColumns.includes(col.title)
@@ -150,9 +149,8 @@ function Articles() {
             {articlesCount?.draft + articlesCount?.published} Articles
           </Typography>
           <NeetoUITable
-            // allowRowClick
             columnData={filteredColumns}
-            rowData={filteredArticles}
+            rowData={articles}
             onRowClick={(event, article) => {
               handleActionClick(event, article);
             }}

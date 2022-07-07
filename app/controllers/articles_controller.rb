@@ -4,11 +4,14 @@
 class ArticlesController < ApplicationController
   before_action :load_article!, only: %i[show update destroy versions list_schedules create_schedule]
   before_action :load_count, only: %i[index list_by_state]
+  before_action :search, only: %i[index list_by_state]
   after_action :create_new_version, only: %i[update]
   after_action :update_visits_count, only: %i[show]
 
   def index
-    @articles = Article.order(id: :desc).page(params[:page])
+    articles = @searched.order(id: :desc)
+    @articles = articles.page(params[:page])
+    @count = articles.count
   end
 
   def create
@@ -30,7 +33,7 @@ class ArticlesController < ApplicationController
   end
 
   def list_by_state
-    articles = Article.where(state: article_params[:state])
+    articles = @searched.where(state: article_params[:state])
     @count = articles.count
     @articles = articles.page(params[:page])
   end
@@ -88,5 +91,9 @@ class ArticlesController < ApplicationController
 
     def create_execution_time
       Time.zone.at(params[:execution_time].to_i)
+    end
+
+    def search
+      @searched = Article.where("lower(title) LIKE ?", "%#{params[:title].downcase}%")
     end
 end
