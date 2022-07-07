@@ -9,7 +9,7 @@ class Article < ApplicationRecord
   belongs_to :user
   belongs_to :category
   has_many :versions, dependent: :destroy
-  has_many :schedules, as: :scheduleable, dependent: :destroy
+  has_many :schedules, as: :schedulable, dependent: :destroy
 
   validates :title, presence: true, length: { maximum: MAX_TITLE_LENGTH }
   validates :body, presence: true, length: { maximum: MAX_BODY_LENGTH }

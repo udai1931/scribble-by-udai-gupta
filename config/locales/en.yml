@@ -44,3 +44,6 @@ en:
   must_exist: "%{entity} must exist"
   blank: "%{entity} can't be blank"
   taken: "%{entity} has already been taken"
+  schedule:
+    execution_time:
+      invalid: "must be in the future"
