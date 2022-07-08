@@ -41,6 +41,6 @@ class CategoriesController < ApplicationController
     end
 
     def reorder_categories
-      @categories = Category.order(position: :desc)
+      @categories = Category.order(position: :asc)
     end
 end

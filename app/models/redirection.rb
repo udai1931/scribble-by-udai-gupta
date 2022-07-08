@@ -38,6 +38,6 @@ class Redirection < ApplicationRecord
     end
 
     def check_redirection_format(str)
-      str.match(/^\/articles\/[A-Za-z0-9\-]+$/)
+      str.match(/^articles\/[A-Za-z0-9\-]+$/)
     end
 end
