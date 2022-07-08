@@ -1,4 +1,4 @@
-# frozen_string_literal: true
+#  frozen_string_literal: true
 
 class CategoriesController < ApplicationController
   before_action :load_category!, only: %i[update destroy list_articles]
