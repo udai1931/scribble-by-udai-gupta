@@ -21,7 +21,7 @@ class CategoriesController < ApplicationController
   end
 
   def list_articles
-    articles = @category.articles
+    articles = @category.articles.where("lower(title) LIKE ?", "%#{params[:title].downcase}%")
     @count = articles.count
     @articles = articles.page(params[:page])
   end
@@ -41,6 +41,6 @@ class CategoriesController < ApplicationController
     end
 
     def reorder_categories
-      @categories = Category.order(position: :desc)
+      @categories = Category.order(position: :asc)
     end
 end

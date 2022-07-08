@@ -1,6 +1,7 @@
 import axios from "axios";
 
-const list = ({ page = 1 } = {}) => axios.get(`/articles?page=${page}`);
+const list = ({ page = 1, search = "" } = {}) =>
+  axios.get(`/articles?page=${page}&title=${search}`);
 
 const create = payload => axios.post("/articles", payload);
 
@@ -11,8 +12,8 @@ const update = ({ slug, payload }) => axios.put(`/articles/${slug}`, payload);
 
 const destroy = slug => axios.delete(`/articles/${slug}`);
 
-const listByState = ({ page = 1, payload }) =>
-  axios.post(`/articles/list_by_state?page=${page}`, payload);
+const listByState = ({ page = 1, search = "", payload }) =>
+  axios.post(`/articles/list_by_state?page=${page}&title=${search}`, payload);
 
 const versions = slug => axios.get(`/articles/${slug}/versions`);
 
