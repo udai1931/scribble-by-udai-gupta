@@ -4,6 +4,6 @@ class Eui::ArticlesController < ApplicationController
   def index
     @articles = Article.published.where(
       "lower(title) LIKE :search",
-      search: "%#{params[:title]}%")
+      search: "%#{params[:title].downcase}%")
   end
 end

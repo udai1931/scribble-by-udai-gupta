@@ -8,8 +8,8 @@ const update = ({ id, payload }) => axios.put(`/categories/${id}`, payload);
 
 const destroy = ({ id }) => axios.delete(`/categories/${id}`);
 
-const listArticlesByCategory = ({ id, page = 1 }) =>
-  axios.get(`/categories/${id}/list_articles?page=${page}`);
+const listArticlesByCategory = ({ id, page = 1, search = "" }) =>
+  axios.get(`/categories/${id}/list_articles?page=${page}&title=${search}`);
 
 const listArticlesByCategories = () =>
   axios.get("/categories/list_articles_in_order");

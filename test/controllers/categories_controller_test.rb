@@ -23,6 +23,8 @@ class CategoriesControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
     response_body = response.parsed_body
     all_categories = response_body["categories"]
+    response_body = response.parsed_body
+    all_categories = response_body["categories"]
     assert_equal all_categories.length, Category.count
   end
 
@@ -41,5 +43,18 @@ class CategoriesControllerTest < ActionDispatch::IntegrationTest
     category_params = { category: { name: "Test 2", index: "9" } }
     put category_path(@category.id), params: category_params, headers: @headers
     assert_response :success
+  end
+
+  def test_to_list_categories_in_order
+    get categories_path + "/list_articles_in_order", headers: @headers
+    assert_response :success
+  end
+
+  def test_to_list_articles_by_category
+    get category_path(@category.id) + "/list_articles", headers: @headers
+    assert_response :success
+    response_body = response.parsed_body
+    articles = response_body["articles"]
+    asert_equal = articles.length, @category.articles.count
   end
 end
