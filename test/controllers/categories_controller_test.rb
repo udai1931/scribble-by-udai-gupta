@@ -54,7 +54,6 @@ class CategoriesControllerTest < ActionDispatch::IntegrationTest
     get category_path(@category.id) + "/list_articles", headers: @headers
     assert_response :success
     response_body = response.parsed_body
-    puts response_body
     articles = response_body["articles"]
     asert_equal = articles.length, @category.articles.count
   end

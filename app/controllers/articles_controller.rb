@@ -75,8 +75,7 @@ class ArticlesController < ApplicationController
     end
 
     def create_new_version
-      version = @article.versions.new(article_params)
-      version.save!
+      @article.versions.create!(article_params)
     end
 
     def update_visits_count
