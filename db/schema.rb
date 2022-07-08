@@ -12,7 +12,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_06_29_035539) do
+ActiveRecord::Schema.define(version: 2022_07_06_120417) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -37,6 +37,15 @@ ActiveRecord::Schema.define(version: 2022_06_29_035539) do
     t.index ["name"], name: "index_categories_on_name", unique: true
   end
 
+  create_table "late_article_updates", force: :cascade do |t|
+    t.string "state", null: false
+    t.string "update_time", null: false
+    t.bigint "article_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["article_id"], name: "index_late_article_updates_on_article_id"
+  end
+
   create_table "organizations", force: :cascade do |t|
     t.string "name", null: false
     t.string "password_digest"
@@ -51,6 +60,16 @@ ActiveRecord::Schema.define(version: 2022_06_29_035539) do
     t.string "to", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "schedules", force: :cascade do |t|
+    t.string "status", null: false
+    t.datetime "execution_time", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.string "scheduleable_type"
+    t.bigint "scheduleable_id"
+    t.index ["scheduleable_type", "scheduleable_id"], name: "index_schedules_on_scheduleable"
   end
 
   create_table "users", force: :cascade do |t|
@@ -73,6 +92,7 @@ ActiveRecord::Schema.define(version: 2022_06_29_035539) do
 
   add_foreign_key "articles", "categories"
   add_foreign_key "articles", "users"
+  add_foreign_key "late_article_updates", "articles"
   add_foreign_key "users", "organizations"
   add_foreign_key "versions", "articles"
   add_foreign_key "versions", "categories"

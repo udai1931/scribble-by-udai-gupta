@@ -11,7 +11,7 @@ function VersionHistory({ setShowRestoreModal, versions, setSelectedVersion }) {
   };
 
   return (
-    <div className="version-history-container mt-16 space-y-2 overflow-auto border-l-2 py-6 px-4">
+    <div className="space-y-2 py-4 px-4">
       <Typography style="h3">Version History</Typography>
       <Typography style="body1">
         Version history of Setting up an account in Scribble

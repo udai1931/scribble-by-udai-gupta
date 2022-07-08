@@ -68,3 +68,7 @@ gem "kaminari"
 group :development, :staging, :heroku, :test do
   gem "database_cleaner"
 end
+
+gem "sidekiq"
+
+gem "sidekiq-cron"
