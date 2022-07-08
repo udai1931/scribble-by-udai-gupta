@@ -92,7 +92,6 @@ function CategoriesSettings() {
     try {
       for (let index = 0; index < items.length; index++) {
         const item = items[index];
-        if (item.index === index + 1) return;
         await categoriesApi.update({
           id: item.value,
           payload: { position: index + 1 },

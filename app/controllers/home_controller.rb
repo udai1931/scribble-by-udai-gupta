@@ -10,6 +10,6 @@ class HomeController < ApplicationController
 
   def redirect_article
     redirection = Redirection.find_by(from: params["path"])
-    redirect_to redirection.to if redirection.present?
+    redirect_to "/" + redirection.to if redirection.present?
   end
 end
