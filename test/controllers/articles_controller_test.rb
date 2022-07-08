@@ -43,7 +43,7 @@ class ArticlesControllerTest < ActionDispatch::IntegrationTest
     post articles_path,
       params: {
         article: {
-          title: "test", body: "body", user_id: @user.id,
+          title: @article.title, body: "body", user_id: @user.id,
           category_id: @category.id, state: "draft"
         }
       },
@@ -71,5 +71,63 @@ class ArticlesControllerTest < ActionDispatch::IntegrationTest
     article_params = { article: { state: "published", title: "Test 2" } }
     put article_path(SecureRandom.uuid), params: article_params, headers: @headers
     assert_response :not_found
+  end
+
+  def test_should_update_article
+    article_params = {
+      article: {
+        body: "Test body", title: "test title", state: "draft", tag: "drafted",
+        category_id: @category.id
+      }
+    }
+    # byebug
+    put article_path(@article.slug), params: article_params, headers: @headers
+    assert_response :success
+    response_json = response.parsed_body
+  end
+
+  def test_should_not_update_article_slug
+    article_params = { article: { slug: "abcd" } }
+    put article_path(@article.slug), params: article_params, headers: @headers
+    assert_response :unprocessable_entity
+    response_json = response.parsed_body
+    assert_equal response_json["error"], "Slug " + t("slug.change_not_allowed")
+  end
+
+  def test_should_show_article
+    get article_path(@article.slug), headers: @headers
+    assert_response :success
+  end
+
+  def test_should_show_article_for_eui
+    get article_path(@article.slug) + "?eui=true", headers: @headers
+    assert_response :success
+  end
+
+  def list_all_versions
+    get article_path(@article.slug) + "/versions", headers: @headers
+    assert_response :success
+    response_json = response.parsed_body
+    assert_equal response_json["versions"].length, @article.versions.length
+  end
+
+  def test_should_list_articles_in_order_of_visits
+    get articles_path + "/list_in_order_of_visits", headers: @headers
+    assert_response :success
+    response_json = response.parsed_body
+    assert_equal response_json["articles"][0]["visits"], Article.order(visits: :desc).first.visits
+  end
+
+  def test_should_list_all_scheduled_updates
+    get article_path(@article.slug) + "/list_schedules", headers: @headers
+    assert_response :success
+    response_json = response.parsed_body
+    assert_equal response_json["schedules"].length, @article.schedules.length
+  end
+
+  def test_should_create_a_schedule
+    post article_path(@article.slug) + "/create_schedule", params: { status: "draft", execution_time: Time.current },
+      headers: @headers
+    assert_response :success
   end
 end

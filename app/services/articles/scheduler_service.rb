@@ -20,7 +20,7 @@ class Articles::SchedulerService
     def update_articles
       articles_to_update.each do |updated_article|
           Articles::UpdateArticlesWorker.perform_in(
-            updated_article.execution_time, updated_article.scheduleable_id, updated_article.status,
+            updated_article.execution_time, updated_article.schedulable_id, updated_article.status,
             updated_article.id)
         end
     end

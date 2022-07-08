@@ -65,7 +65,7 @@ class ArticlesController < ApplicationController
   private
 
     def article_params
-      params.require(:article).permit(:title, :body, :state, :category_id, :tag, :date, :time)
+      params.require(:article).permit(:title, :body, :state, :category_id, :tag, :date, :time, :slug)
     end
 
     def load_article!
@@ -78,8 +78,7 @@ class ArticlesController < ApplicationController
     end
 
     def create_new_version
-      version = @article.versions.new(article_params)
-      version.save!
+      @article.versions.create!(article_params)
     end
 
     def update_visits_count

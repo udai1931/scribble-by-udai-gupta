@@ -67,9 +67,9 @@ ActiveRecord::Schema.define(version: 2022_07_06_120417) do
     t.datetime "execution_time", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.string "scheduleable_type"
-    t.bigint "scheduleable_id"
-    t.index ["scheduleable_type", "scheduleable_id"], name: "index_schedules_on_scheduleable"
+    t.string "schedulable_type"
+    t.bigint "schedulable_id"
+    t.index ["schedulable_type", "schedulable_id"], name: "index_schedules_on_schedulable"
   end
 
   create_table "users", force: :cascade do |t|
