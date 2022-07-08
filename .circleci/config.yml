@@ -18,7 +18,7 @@ jobs:
 
     steps:
       - checkout
-      - run: gem install bundler:2.2.20
+      - run: gem install bundler:2.3.16
       #install sqlite dependency
       - run: wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
       - run: sudo apt update
