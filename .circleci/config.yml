@@ -25,8 +25,8 @@ jobs:
       - run: sudo apt install zlib1g-dev libsqlite3-dev
       # Bundle install
       - run:
-          bundle config set --local path 'vendor/bundle' || bundle install
-           --jobs=4 --retry=3
+          bundle config set --local path 'vendor/bundle'
+          bundle install --jobs=4 --retry=3
       # Yarn install
       - run:
           chmod a+x ./bin/yarn && ./bin/yarn install --cache-folder
