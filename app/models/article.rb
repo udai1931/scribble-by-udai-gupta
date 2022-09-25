@@ -6,7 +6,7 @@ class Article < ApplicationRecord
 
   enum state: { draft: "draft", published: "published" }
 
-  scope :with_title_search, -> (title) { where("lower(title) LIKE ?", "%#{title.downcase}%") }
+  scope :with_title_search, -> (title) { where("lower(title) LIKE ?", "%#{title&.downcase}%") }
 
   belongs_to :user
   belongs_to :category
