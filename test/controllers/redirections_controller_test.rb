@@ -20,7 +20,7 @@ class RedirectionsControllerTest < ActionDispatch::IntegrationTest
 
   def test_should_create_valid_redirection
     count = Redirection.count
-    post redirections_path, params: { redirection: { from: "/articles/url1", to: "/articles/url2" } }, headers: @headers
+    post redirections_path, params: { redirection: { from: "articles/url1", to: "articles/url2" } }, headers: @headers
     assert_response :success
     assert_equal count + 1, Redirection.count
   end
@@ -32,7 +32,7 @@ class RedirectionsControllerTest < ActionDispatch::IntegrationTest
   end
 
   def test_to_update_the_redirection
-    redirection_params = { redirection: { from: "/articles/url3", to: "/articles/url4" } }
+    redirection_params = { redirection: { from: "articles/url3", to: "articles/url4" } }
     put redirection_path(@redirection.id), params: redirection_params, headers: @headers
     assert_response :success
   end
