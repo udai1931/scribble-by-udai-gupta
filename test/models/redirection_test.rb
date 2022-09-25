@@ -34,9 +34,9 @@ class RedirectionTest < ActiveSupport::TestCase
   end
 
   def test_cycle_detection_in_redirection
-    redirection_1 = create(:redirection, from: "/articles/a", to: "/articles/b")
-    redirection_2 = create(:redirection, from: "/articles/b", to: "/articles/c")
-    redirection_3 = build(:redirection, from: "/articles/c", to: "/articles/a")
+    redirection_1 = create(:redirection, from: "articles/a", to: "articles/b")
+    redirection_2 = create(:redirection, from: "articles/b", to: "articles/c")
+    redirection_3 = build(:redirection, from: "articles/c", to: "articles/a")
     refute redirection_3.valid?
   end
 end
