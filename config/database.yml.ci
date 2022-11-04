@@ -4,8 +4,6 @@ default: &default
   host: 127.0.0.1
   encoding: unicode
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-  username: <%= ENV['PG_USER'] %>
-  password: <%= ENV['PG_PASSWORD'] %>
 
 development:
   <<: *default
@@ -13,6 +11,7 @@ development:
 
 test:
   <<: *default
+  user: postgres
   database: granite_test<%= ENV['CIRCLE_NODE_INDEX'] %>
 
 production:
